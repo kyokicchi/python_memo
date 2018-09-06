@@ -1,24 +1,13 @@
 
-#-----------------------------------------------------------------------------
-
-
-
-
-#-----------------------------------------------------------------------------
+#-------------------Pandas memo---------------------------------------------
 
 
 # coding: utf-8
-
-# In[2]:
 
 
 #pandasインポートとデータセット読み込み
 import pandas as pd
 df_train = pd.read_csv('train.csv')
-
-
-# In[6]:
-
 
 #describe
 df_train.describe()
@@ -30,16 +19,13 @@ df_train.info()
 df_train.isnull().sum()
 
 #項目ごとの最大値を取得
-
 n_oldest = df_train.Age.max()
 
-#Pandasメモ：最大値をもつ行を取得する方法
-
+#最大値をもつ行を取得する方法
 df_train[df_train.Age==n_oldest]
 
-
-# In[3]:
-
+#相関係数
+df_tmp.corr()
 
 #ダミー変数化処理用関数
 
@@ -49,7 +35,6 @@ def dummylize(df,n_item):
     df = df.drop(n_item,axis = 1)
     return df
 
-
 #nullを0、それ以外を1とする関数
 def booleanize(df,n_item):
     df_tmp = df[n_item].notnull() * 1
@@ -58,7 +43,6 @@ def booleanize(df,n_item):
     df = df.drop(n_item,axis = 1)
     df = pd.concat((df, df_tmp), axis = 1)
     return df
-
 
 #カテゴリを数値化する関数
 
@@ -73,7 +57,6 @@ df_x = df_train[df_train.Age>=40]
 df_x
 
 #項目のある値の出現頻度をカウント
-
 a = df_train.Sex == 'male'
 a.sum()
 
@@ -86,11 +69,6 @@ df_tmp = df_tmp.drop('Name',axis = 1)
 df_tmp = df_tmp.drop('Ticket',axis = 1)
 df_tmp = df_tmp.drop('Cabin',axis = 1)
 
-#相関係数
-df_tmp.corr()
-
-
-# In[5]:
 
 
 #性別・年代別の生存率を散布図プロット
@@ -111,20 +89,10 @@ plt.scatter(df_age,df_sex, color='#6699cc',alpha=0.5)
 plt.show()
 
 
-
-# In[14]:
-
-
 #キャビン番号が分かっているケースと不明のケースの生存率比較
 
 cabin_known_ratio = len(df_train[((df_train.Cabin.isnull()==False) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()==False])
 cabin_unknown_ratio = len(df_train[((df_train.Cabin.isnull()) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()])
-
-print(cabin_known_ratio)
-print(cabin_unknown_ratio)
-
-
-# In[6]:
 
 
 #男女生存率を比較
@@ -134,9 +102,6 @@ female_survived_ratio = len(df_train[(df_train.Sex == 'female') & (df_train.Surv
 sex_survived_ratio = [male_survived_ratio, female_survived_ratio]
 plt.bar([0,1], sex_survived_ratio, tick_label=['male', 'female'], width=0.5)
 plt.show()
-
-
-# In[7]:
 
 
 #年代別　男女生存比率　比較チャート
@@ -181,10 +146,6 @@ plt.tick_params(labelsize = 15)
 plt.show()
 
 
-# In[16]:
-
-
-
 #ファミリーネーム抜出し
 
 l_names = [x.replace(",","").replace(".","").split(" ") for x in df_train.Name.values.tolist()]
@@ -222,16 +183,10 @@ plt.show()
 
 # coding: utf-8
 
-# In[1]:
-
-
 #pandasインポートとデータセット読み込み
 import pandas as pd
 df_train = pd.read_csv('train.csv')
 df_test = pd.read_csv('test.csv')
-
-
-# In[2]:
 
 
 #ダミー変数化処理用関数
@@ -253,9 +208,6 @@ def booleanize(df,n_item):
     return df
 
 
-# In[3]:
-
-
 #性別、乗車場所をダミー変数化、CabinをBoolean化をApply
 
 df_train = dummylize(df_train,'Sex')
@@ -266,9 +218,6 @@ df_train = booleanize(df_train,'Cabin')
 df_test = dummylize(df_test,'Sex')
 df_test = dummylize(df_test,'Embarked')
 df_test = booleanize(df_test,'Cabin')
-
-
-# In[4]:
 
 
 #Title列、Title数値化列、FamilyName列、FamilyName頻度列を追加する処理関数
