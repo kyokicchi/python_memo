@@ -1,9 +1,10 @@
-
-#-------------------Pandas memo---------------------------------------------
-
+#-------------------General memo---------------------------------------------
 
 # coding: utf-8
 
+
+
+#-------------------Pandas memo---------------------------------------------
 
 #pandasインポートとデータセット読み込み
 import pandas as pd
@@ -54,7 +55,6 @@ def categorize(df,n_item):
 
 #条件で要素抜出し
 df_x = df_train[df_train.Age>=40]
-df_x
 
 #項目のある値の出現頻度をカウント
 a = df_train.Sex == 'male'
@@ -162,6 +162,7 @@ df_train.head()
 n_family = df_train.Family.apply(lambda x: (df_train.Family == x).sum())
 n_family.name = 'FamilyNum'
 df_train = pd.concat((df_train, n_family), axis = 1)
+
 #家族の構成人数ごとの生存率比較
 
 f1_ratio = len(df_train[((df_train.FamilyNum == 1) & (df_train.Survived == 1))]) / len(df_train[df_train.FamilyNum == 1])
@@ -181,13 +182,6 @@ plt.show()
 
 #-----------------------------------------------------------------------------
 
-# coding: utf-8
-
-#pandasインポートとデータセット読み込み
-import pandas as pd
-df_train = pd.read_csv('train.csv')
-df_test = pd.read_csv('test.csv')
-
 
 #ダミー変数化処理用関数
 
@@ -206,21 +200,6 @@ def booleanize(df,n_item):
     df = df.drop(n_item,axis = 1)
     df = pd.concat((df, df_tmp), axis = 1)
     return df
-
-
-#性別、乗車場所をダミー変数化、CabinをBoolean化をApply
-
-df_train = dummylize(df_train,'Sex')
-df_train = dummylize(df_train,'Embarked')
-df_train = booleanize(df_train,'Cabin')
-
-
-df_test = dummylize(df_test,'Sex')
-df_test = dummylize(df_test,'Embarked')
-df_test = booleanize(df_test,'Cabin')
-
-
-#Title列、Title数値化列、FamilyName列、FamilyName頻度列を追加する処理関数
 
 
 #Listを含まれるタイトルのみの文字列に変換するサブ関数
@@ -267,19 +246,6 @@ def nameAnalysis(df):
     return df
 
 
-# In[5]:
-
-
-#名前処理関数をApply
-
-df_train = nameAnalysis(df_train)
-
-df_test = nameAnalysis(df_test)
-
-
-# In[6]:
-
-
 #年齢を世代区分け
 
 
@@ -295,38 +261,12 @@ def ageGroup(x):
         elif 60 <= x:
             return 4
 
-
 df_train.Age = df_train.Age.apply(lambda x: ageGroup(x))
-df_test.Age = df_test.Age.apply(lambda x: ageGroup(x))
-
-
-# In[7]:
-
-
-df_test.head()
-
-
-# In[8]:
 
 
 #年齢推定モデルに渡すためテスト用加工済みCSVを保存
 
 df_train.to_csv('forAgePred.csv')
-
-
-
-# In[9]:
-
-
-#別NoteBookの処理で作成・保存した年齢推定モデルの読み込み
-
-import pickle
-filename = 'age_pred.sav'
-model_age_pred = pickle.load(open(filename, 'rb'))
-
-
-# In[10]:
-
 
 #Age欠損部分を年齢推定モデルを使い補完する処理まとめ関数
 
@@ -364,18 +304,13 @@ def fillMissingAge(df):
     return df
 
 
-# In[11]:
+# scikit-learn, 機械学習メモ--------------------------------------------------------------------------------
 
+#別NoteBookの処理で作成・保存した年齢推定モデルの読み込み
 
-
-#Age列欠損補完をApply
-
-df_train = fillMissingAge(df_train)
-
-df_test = fillMissingAge(df_test)
-
-
-# In[12]:
+import pickle
+filename = 'age_pred.sav'
+model_age_pred = pickle.load(open(filename, 'rb'))
 
 
 #学習・テスト用データセット整備
@@ -388,10 +323,6 @@ df_x_pack = df_train[l_features]
 df_y_pack = df_train.Survived
 
 X_train, X_test, y_train, y_test = train_test_split(df_x_pack, df_y_pack, test_size=0.25)
-
-
-
-# In[13]:
 
 
 #XGBoostモデル
@@ -424,10 +355,6 @@ def get_xgb_model3(X, Y):
     print(gs.best_params_)
 
     return res
-
-
-# In[14]:
-
 
 #XGBモデル学習
 
@@ -465,24 +392,14 @@ model_randForest = applyGSCV(RandomForestClassifier(),obj_param,X_train, y_train
 
 print('done')
 
-
-# In[17]:
-
-
 #MLPCモデル
 
 from sklearn.neural_network import MLPClassifier
 model_MLPC =  MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
 
 
-# In[19]:
-
-
 N = len(l_features)
 N
-
-
-# In[50]:
 
 
 #Keras DLモデル
@@ -698,42 +615,6 @@ def applyGSCV(model, param, X, Y):
 
     return res
 
-
-
-
-#-----------------------------------------------------------------------------
-
-
-# coding: utf-8
-
-# In[1]:
-
-
-#pandasインポートとデータセット読み込み
-import pandas as pd
-df_forAgePred = pd.read_csv('forAgePred.csv')
-
-#欠損値の行を削除
-df_forAgePred = df_forAgePred.dropna()
-
-
-# In[2]:
-
-
-#Mr. Mrs. 等の呼称ごとの年齢を推定
-
-#年齢をInt化し100倍に
-x = df_forAgePred.Age.apply(lambda x: int(x*100))
-df_forAgePred = df_forAgePred.drop('Age',axis =1)
-x.name = 'Age'
-df_forAgePred = pd.concat((df_forAgePred, x), axis = 1)
-
-
-#推定に使う要素Xを指定。数値化したタイトル列
-l_pred = ['TitlesNum']
-
-
-# In[3]:
 
 
 #試すモデルを指定
