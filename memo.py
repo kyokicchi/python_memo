@@ -1,12 +1,59 @@
 # coding: utf-8
 
-#-------------------General memo---------------------------------------------
-#よくやる標準入力受け取り
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● I/O 関連 ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+#-------------------標準入力受け取り---------------------------------------------
 import sys
 DATA = sys.stdin.read()
 DATA = DATA.replace("\n","")
 DATA = DATA.split()
+#-------------------ファイル入出力---------------------------------------------
+#ファイル入出力
+item = "content"
+f = open("output.txt", "w")
+f.write(item + "\n")
+f.close()
+#-------------------JSON入出力---------------------------------------------
+import json
+dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
+#JSON保存
+f = open('output.json', 'w')
+json.dump(dic, f)
+f.close()
+#JSON読み込み
+f = open('output.json', 'r')
+dic = json.load(f)
+f.close()
+#-------------------Pandas 入出力---------------------------------------------
+import pandas as pd
+#Read
+df = pd.read_csv('train.csv')
+#Save
+df.to_csv('modified.csv')
+#機械学習 modelオブジェクト入出力--------------------------------------------------------------------------------
+#モデル保存
+import pickle
+filename = 'xgb_model.sav'
+pickle.dump(model, open(filename, 'wb'))
+#モデル読み込み
+import pickle
+filename = 'xgb_model.sav'
+model = pickle.load(open(filename, 'rb'))
+#Tensorflow モデル保存 & 読み込み--------------------------------------------------------------------------
+#Save
+saver = tf.train.Saver()
+saver.save(sess, '../model/test_model')
+#Read
+saver = tf.train.Saver()
+saver.restore(sess, '../model/test_model')
+#Requests ------------------------------------------------------------------------------------------------
+import requests
+import pandas as pd
+git_res = requests.get('https://api.github.com/search/repositories?q=language:python+created:2017-07-28&per_page=3')
+outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','git_url','updated_at','created_at']]
+#print(git_res.text)
+print(outP)
 
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● General ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #PrintのFormating
 print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
 print("a: %f, b: %f" %(a , b))
@@ -118,32 +165,6 @@ print (int("0b100",2))
 print (bin(5))
 print (int(bin(5),2))
 
-#-------------------JSON入出力---------------------------------------------
-import json
-dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
-f = open('output.json', 'w')
-json.dump(dic, f)
-f.close()
-
-f = open('output.json', 'r')
-dic = json.load(f)
-f.close()
-
-#-------------------ファイル入出力---------------------------------------------
-#ファイル入出力
-item = "content"
-f = open("output.txt", "w")
-f.write(item + "\n")
-f.close()
-
-#Requests ------------------------------------------------------------------------------------------------
-import requests
-import pandas as pd
-git_res = requests.get('https://api.github.com/search/repositories?q=language:python+created:2017-07-28&per_page=3')
-outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','git_url','updated_at','created_at']]
-#print(git_res.text)
-print(outP)
-
 # Class 使用例------------------------------------------------------------------------------------------------------------
 class Student:
     def __init__(self, name, grade, age):
@@ -212,11 +233,8 @@ print(myShape)
 yourShape = Shape(4)
 print(yourShape)"
 
-#-------------------Pandas General memo---------------------------------------------
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Pandas ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 import pandas as pd
-
-df = pd.read_csv('train.csv')
-df.to_csv('modified.csv')
 
 df_temp = df.copy() #こうしないと参照コピーになる
 
@@ -276,27 +294,16 @@ num_cat = le.fit_transform(str_categories)
 df_n_cat = pd.Series(num_cat, name='NumCat')
 
 
-#-------------------Pandas 列加工もろもろ
+#-------------------Pandas title分類
 choice = ["Miss","Mr","Mrs","Master"]
 l_title = [list(set(x).intersection(set(choice)))[0] for x in l_names]     # ["Mr","Johnny","Depp"] -> "Mr"
-
-def ageGroup(x):
-        if 0 <= x and x < 10:
-            return 0
-        elif 10 <= x and x < 20:
-            return 1
-        elif 20 <= x and x < 40:
-            return 2
-        elif 40 <= x and x < 60:
-            return 3
-        elif 60 <= x:
-            return 4
-df_train.Age = df_train.Age.apply(lambda x: ageGroup(x))
 
 #-------------------Pandas cut
 pd.cut(df, [0, 10, 50, 100])
 pd.cut(df, 4, right=False)
 counts = pd.cut(df, 3, labels=['S', 'M', 'L']).value_counts()
+df['Age_bin'] = pd.cut(df['Age'], 5, labels=False)
+
 s_cut, bins = pd.cut(df, 4, retbins=True)
 print(s_cut)
 print(bins)
@@ -315,7 +322,7 @@ print(bins)
     df = df.drop('Age',axis = 1)
     df = pd.concat((df,df_mix),axis = 1)
 
-#-------------------Matplot General memo---------------------------------------------
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Matplot ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 df_draw = df_tmp[df_tmp.Survived==1]
@@ -332,17 +339,7 @@ sex_survived_ratio = [male_survived_ratio, female_survived_ratio]
 plt.bar([0,1], sex_survived_ratio, tick_label=['male', 'female'], width=0.5)
 plt.show()
 
-#機械学習関連メモ General --------------------------------------------------------------------------------
-#モデル保存
-import pickle
-filename = 'xgb_model.sav'
-pickle.dump(model_final, open(filename, 'wb'))
-
-#モデル読み込み
-import pickle
-filename = 'xgb_model.sav'
-loaded_m_xgb = pickle.load(open(filename, 'rb'))
-
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Sci-kit Learn ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #学習・テスト用データセット整備
 from sklearn.model_selection import train_test_split
 df_train = df_train.fillna(0)
@@ -375,7 +372,7 @@ obj_param = {
 'max_depth': [3,5,10,15,20,25,30,40,50,100],
 'random_state': [0]
 }
-model_final = applyGSCV(model, obj_param, df_x, df_y)
+model_after_GSCV = applyGSCV(model, obj_param, df_x, df_y)
 
 #XGBoostモデル--------------------------------------------------------------------------------
 def xgb_model(X, Y):
@@ -395,45 +392,20 @@ def xgb_model(X, Y):
         "min_child_weight": from_zero_positive,
     }
     xgbreg = xgb.XGBRegressor(nthreads=-1)
-    gs = RandomizedSearchCV(xgbreg, params, n_jobs=3)
-    res = gs.fit(X, Y)
-    print(gs.best_params_)
+    rscv = RandomizedSearchCV(xgbreg, params, n_jobs=3)
+    res = rscv.fit(X, Y)
+    print(rscv.best_params_)
     return res
-model_xgb = xgb_model(X_train, y_train)
+model = xgb_model(X_train, y_train)
 
 #Random Forestモデル--------------------------------------------------------------------------------
 from sklearn.ensemble import RandomForestClassifier
-obj_param = {
-    'n_estimators': [5,10,20,30,50,100,300], 'max_depth': [3,5,10,15,20,25,30,40,50,100], 'random_state': [0]
-}
-model_randForest = applyGSCV(RandomForestClassifier(),obj_param,X_train, y_train)
+obj_param = { 'n_estimators': [5,10,20,30,50,100,300], 'max_depth': [3,5,10,15,20,25,30,40,50,100] }
+model = applyGSCV(RandomForestClassifier(),obj_param,X_train, y_train)
 
 #MLPCモデル--------------------------------------------------------------------------------
 from sklearn.neural_network import MLPClassifier
-model_MLPC =  MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
-
-#Keras NNモデル---------------------------------------------------------------------------------------
-import keras.optimizers
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
-from keras.utils import to_categorical
-
-N = len(l_features)
-model_NN = Sequential()
-model_NN.add(Dense(2,input_dim=N, activation='sigmoid', kernel_initializer='uniform'))
-model_NN.add(Dense(2,activation='softmax', kernel_initializer='uniform'))
-sgd = keras.optimizers.SGD(lr = 0.5, momentum = 0.0,decay = 0.0, nesterov = False)
-model_NN.compile(optimizer = sgd, loss = 'categorical_crossentropy', metrics = ['accuracy'])
-
-y_train_bin = to_categorical(y_train)
-y_test_bin = to_categorical(y_test)
-
-history = model_NN.fit(X_train, y_train_bin, batch_size=100,epochs=1000,verbose=0,validation_data=(X_test, y_test_bin))
-history.history['acc'] #対trainデータ正確性
-history.history['val_acc'] #対testデータ正確性
-
-score = model_NN.evaluate(X_test, y_test_bin, verbose = 0) 
-print(score[0], score[1]) #score[0]が交差エントロピー誤差、score[1]がテストデータ正答率
+model =  MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
 
 #複数のモデルをざっくり試す----------------------------------------------------------------------------
 from sklearn.linear_model import LogisticRegression
@@ -456,10 +428,10 @@ l_models.append(("MLPClassifier", MLPClassifier(solver='lbfgs', random_state=0))
 def evaluate_models(df_forAgePred, l_pred, l_models):
     results = []
     names = []
-    X_train, X_test, y_train, y_test = train_test_split(df_forAgePred[l_pred], df_forAgePred.Age, test_size=0.25)
+    x_train, x_test, y_train, y_test = train_test_split(df_forAgePred[l_pred], df_forAgePred.Age, test_size=0.25)
     for name, model in l_models:
-        model.fit(X_train, y_train)
-        res_pred = model.predict(X_test)
+        model.fit(x_train, y_train)
+        res_pred = model.predict(x_test)
         result = mean_squared_error(y_test, res_pred)
         names.append(name)
         results.append(result)
@@ -477,34 +449,34 @@ for n in names:
     print(n)
     print('avg: {0:,.2f} / median: {1:,.2f}'.format(sum(r)/len(r), statistics.median(r)))
 
-#Tensorflow モデル保存 & 読み込み--------------------------------------------------------------------------
-#Save
-saver = tf.train.Saver()
-saver.save(sess, '../model/test_model')
-#Read
-saver = tf.train.Saver()
-saver.restore(sess, '../model/test_model')
-
-#Tensorflow 使用例 1 --------------------------------------------------------------------------
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● tensorflow ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+#Tensorflow simple 使用例 --------------------------------------------------------------------------
 import tensorflow as tf
+
 # Model parameters (variables of function to be learned via machine learning)
 W = tf.Variable([0.], dtype=tf.float32)
 b = tf.Variable([0.], dtype=tf.float32)
+
 # Model input and output (sets of data and result)
 x = tf.placeholder(tf.float32)
 y = tf.placeholder(tf.float32)
+
 # Model itself
 linear_model = W*x + b
+
 # loss
 deltas = linear_model - y
 square_deltas = tf.square(deltas)
 loss = tf.reduce_sum(square_deltas) # sum of the squares
+
 # optimizer
 optimizer = tf.train.GradientDescentOptimizer(0.01)
 train = optimizer.minimize(loss)
+
 # training data
 x_dataset = [1, 2, 3, 4]
 y_dataset = [0, -1, -2, -3]
+
 # training loop
 init = tf.global_variables_initializer()
 sess = tf.Session()
@@ -515,87 +487,36 @@ for x in range(1000):
         print('\nStep: %s' % (x+1))
         print('loss: ' + str(sess.run(train, {x: x_dataset, y: y_dataset})))
         print("W: %f, b: %f" % (sess.run( W ), sess.run( b )) )
+
 # evaluate training accuracy
 ans_W, ans_b, ans_loss = sess.run([W, b, loss], {x: x_dataset, y: y_dataset})
 print("W: %s b: %s loss: %s"%(ans_W, ans_b, ans_loss))
 
-# Tensorflow 使用例 2 ------------------------------------------------------------------
+# Tensorflow Estimator 使用例 ------------------------------------------------------------------
 
 import numpy as np
 import tensorflow as tf
 
 num_columns = [tf.feature_column.numeric_column("x",shape=[1])]
-
 estimator = tf.estimator.LinearRegressor(feature_columns=num_columns)
 
 x_dataset = np.array([1.,2.,3.,4.])
 y_dataset = np.array([0.,-1.,-2.,-3.])
-
 x_eval = np.array([2.,5.,8.,1.])
 y_eval = np.array([-1.01,-4.1,-7.,0.])
 
 input_fn = tf.estimator.inputs.numpy_input_fn({"x":x_dataset},y_dataset,batch_size=4, num_epochs=None, shuffle=True)
-
-train_input_fn = tf.estimator.inputs.numpy_input_fn({"x":x_dataset},y_dataset,batch_size=4, num_epochs=1000, shuffle=False)
-
-eval_input_fn = tf.estimator.inputs.numpy_input_fn({"x":x_eval},y_eval,batch_size=4, num_epochs=1000, shuffle=False)
-
 estimator.train(input_fn=input_fn, steps=1000)
 
+train_input_fn = tf.estimator.inputs.numpy_input_fn({"x":x_dataset},y_dataset,batch_size=4, num_epochs=1000, shuffle=False)
+eval_input_fn = tf.estimator.inputs.numpy_input_fn({"x":x_eval},y_eval,batch_size=4, num_epochs=1000, shuffle=False)
 ans_train_data = estimator.evaluate(input_fn=train_input_fn)
 ans_eval_data = estimator.evaluate(input_fn=eval_input_fn)
 
 print("train data vs model: %r" % ans_train_data)
 print("eval data vs model: %r" % ans_eval_data)
 
-
-# Tensorflow 使用例 3 ------------------------------------------------------------------
-
-import numpy as np
-import tensorflow as tf
-
-def model_fn(features, labels, mode):
-  W = tf.get_variable("W", [1], dtype=tf.float64)
-  b = tf.get_variable("b", [1], dtype=tf.float64)
-  y = W*features['x'] + b
-
-  loss = tf.reduce_sum(tf.square(y - labels))
-
-  global_step = tf.train.get_global_step()
-  optimizer = tf.train.GradientDescentOptimizer(0.01)
-  train = tf.group(optimizer.minimize(loss),tf.assign_add(global_step, 1))
-
-  return tf.estimator.EstimatorSpec(
-      mode=mode,
-      predictions=y,
-      loss=loss,
-      train_op=train)
-
-
-estimator = tf.estimator.Estimator(model_fn=model_fn)
-
-x_train_dataset = np.array([1., 2., 3., 4.])
-y_train_dataset = np.array([0., -1., -2., -3.])
-
-x_eval_dataset = np.array([2., 5., 8., 1.])
-y_eval_dataset = np.array([-1.01, -4.1, -7., 0.])
-
-input_fn = tf.estimator.inputs.numpy_input_fn({"x": x_train_dataset}, y_train_dataset, batch_size=4, num_epochs=None, shuffle=True)
-train_input_fn = tf.estimator.inputs.numpy_input_fn({"x": x_train_dataset}, y_train_dataset, batch_size=4, num_epochs=1000, shuffle=False)
-eval_input_fn = tf.estimator.inputs.numpy_input_fn({"x": x_eval_dataset}, y_eval_dataset, batch_size=4, num_epochs=1000, shuffle=False)
-
-estimator.train(input_fn=input_fn, steps=1000)
-
-
-train_results = estimator.evaluate(input_fn=train_input_fn)
-eval_results = estimator.evaluate(input_fn=eval_input_fn)
-
-print("train metrics: %r"% train_results)
-print("eval metrics: %r"% eval_results)
-
-
 # tensorflow MNIST example -------------------------------------------------------------------------------------
-
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data",one_hot=True)
 import tensorflow as tf
@@ -625,11 +546,34 @@ correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 print("accuracy:", sess.run(accuracy, feed_dict={x:mnist.test.images, y_:mnist.test.labels}))
 
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Keras ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+#Keras simple NNモデル---------------------------------------------------------------------------------------
+import keras.optimizers
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation
+from keras.utils import to_categorical
 
+l_features = ['feat1','feat2','feat3','feat4']
+N = len(l_features)
+x_train = df_train[l_features]
+x_test = df_test[l_features]
+y_train_bin = to_categorical(df_train['ColumnName'])
+y_test_bin = to_categorical(df_test['ColumnName'])
+
+model_NN = Sequential()
+model_NN.add(Dense(2,input_dim=N, activation='sigmoid', kernel_initializer='uniform'))
+model_NN.add(Dense(2,activation='softmax', kernel_initializer='uniform'))
+sgd = keras.optimizers.SGD(lr = 0.5, momentum = 0.0,decay = 0.0, nesterov = False)
+model_NN.compile(optimizer = sgd, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+
+history = model_NN.fit(x_train, y_train_bin, batch_size=100,epochs=1000,verbose=0,validation_data=(x_test, y_test_bin))
+history.history['acc'] #対trainデータ正確性
+history.history['val_acc'] #対testデータ正確性
+
+score = model_NN.evaluate(X_test, y_test_bin, verbose = 0) 
+print(score[0], score[1]) #score[0]が交差エントロピー誤差、score[1]がテストデータ正答率
 
 #Keras mnist 使用例----------------------------------------------------------------------------------
-
-
 # import libraries
 import pandas as pd
 import keras
@@ -645,9 +589,9 @@ from keras.optimizers import RMSprop
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 # show sample data
-fig = plt.figure(figsize=(9,9))
+fig = plt.figure(figsize=(9 , 9))
 for i in range(36):
-    ax = fig.add_subplot(6, 6, i+1, xticks=[], yticks=[])
+    ax = fig.add_subplot(6, 6, i + 1, xticks=[], yticks=[])
     ax.imshow(x_train[i], cmap='gist_gray')
 plt.show()
 
@@ -657,8 +601,8 @@ x_train = x_train.reshape(60000, 784).astype('float32') /255
 x_test = x_test.reshape(10000, 784).astype('float32') /255
 
 # encode label data into "one-hot"
-y_train = keras.utils.np_utils.to_categorical(y_train.astype('int32'),10)
-y_test = keras.utils.np_utils.to_categorical(y_test.astype('int32'),10)
+y_train = keras.utils.np_utils.to_categorical(y_train.astype('int32'), 10)
+y_test = keras.utils.np_utils.to_categorical(y_test.astype('int32'), 10)
 
 # select Sequiential model
 model = Sequential()
@@ -685,7 +629,7 @@ model.compile(loss='categorical_crossentropy', optimizer=RMSprop(), metrics=['ac
 # Excute training for 20(epochs) times
 history = model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=1, validation_data=(x_test, y_test))
 
-# plot the resulut
+# plot results
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
 plt.title('model accuracy')
@@ -694,7 +638,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-# plot the loss
+# plot loss
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('model loss')
@@ -703,9 +647,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-
 #Keras mnist 使用例 2 ----------------------------------------------------------------------------------
-
 import keras
 from keras.datasets import mnist
 from keras.models import Sequential
@@ -715,13 +657,10 @@ from keras import backend as K
 
 batch_size = 128
 num_classes = 10
-epochs = 3            #original 12
-
+epochs = 3
 img_rows, img_cols = 28, 28
-
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-#Kerasのバックエンドで動くTensorFlowとTheanoでは入力チャンネルの順番が違うので場合分けして書いています
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
     x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
