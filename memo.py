@@ -1,5 +1,6 @@
-#-------------------General memo---------------------------------------------
 # coding: utf-8
+
+#-------------------General memo---------------------------------------------
 #よくやる標準入力受け取り
 import sys
 DATA = sys.stdin.read()
@@ -9,9 +10,31 @@ DATA = DATA.split()
 #PrintのFormating
 print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
 
+#Enumerate
+x=["item1","item2","item3"]
+for index,item in enumerate(x):
+    print(index,":",item)
 
+y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
+for index,key in enumerate(y):
+    print("{0} : {1} : {2}".format(index,key,y[key]))
 
-#List処理関連
+#Function 引数の個数指定なし
+def biggest_number(*args):
+    return max(args)
+X = biggest_number(-10, -5, 5, 10)
+
+#Counter
+from collections import Counter
+c = Counter([1,1,2,3,3,4,5,5,5])
+print(c.most_common(3))
+
+#Datetime
+import datetime                       
+everything = dir(datetime)         
+print(everything)
+
+#-------------------List 関連---------------------------------------------
 my_list = list(range(1, 11))
 backwards = my_list[::-1]
 
@@ -44,35 +67,7 @@ list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
 for a, b in zip(list_a, list_b):
     print(max(a,b), end="  ")
 
-#Dictionary関連
-my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
-print(my_dict.items())
-print(my_dict.keys())
-print(my_dict.values())
-
-candidates = {"a":15, "b":25, "c":35}
-winnerVote = int(max(candidates.values()))
-
-#Enumerate
-x=["item1","item2","item3"]
-for index,item in enumerate(x):
-    print(index,":",item)
-
-y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
-for index,key in enumerate(y):
-    print("{0} : {1} : {2}".format(index,key,y[key]))
-
-#Function 引数の個数指定なし
-def biggest_number(*args):
-    return max(args)
-X = biggest_number(-10, -5, 5, 10)
-
-#Sort関連
-orig = {"1": 3,  "3": 1, "2": 2}
-sortByKey = sorted(orig.items())
-sortByVal = sorted(orig.items(), key=lambda x:x[1])
-
-#Set関連
+#-------------------Set 関連---------------------------------------------
 set_a = {7,9,2}
 set_b = {9,22,2,25}
 set_c = {9,18,21,5}
@@ -88,7 +83,21 @@ set_difference_1 = set_a.difference(set_b)
 set_difference_2 = set_b.difference(set_a)
 set_symmetric_difference = set_a.symmetric_difference(set_b)
 
-#Str関連
+#-------------------Dictionary 関連---------------------------------------------
+my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
+print(my_dict.items())
+print(my_dict.keys())
+print(my_dict.values())
+
+candidates = {"a":15, "b":25, "c":35}
+winnerVote = int(max(candidates.values()))
+
+#Sort
+orig = {"1": 3,  "3": 1, "2": 2}
+sortByKey = sorted(orig.items())
+sortByVal = sorted(orig.items(), key=lambda x:x[1])
+
+#-------------------Str 関連---------------------------------------------
 str = "abcde"
 L = list(str)
 str2 = "".join(L)
@@ -100,7 +109,7 @@ for char in phrase:
     else:
         print(char,end='')
 
-#Binary関連
+#-------------------Binary 関連---------------------------------------------
 x = 0b1001 + 0b1001
 y = 0b1001 * 0b1001
 print (int("111",2))
@@ -108,17 +117,7 @@ print (int("0b100",2))
 print (bin(5))
 print (int(bin(5),2))
 
-#Counter
-from collections import Counter
-c = Counter([1,1,2,3,3,4,5,5,5])
-print(c.most_common(3))
-
-#Datetime
-import datetime                       
-everything = dir(datetime)         
-print(everything)
-
-#JSON関連
+#-------------------JSON、入出力 関連---------------------------------------------
 import json
 dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
 f = open('output.json', 'w')
@@ -136,7 +135,7 @@ f.write(item + "\n")
 f.close()
 
 
-#Requests -------------------------------------------------------------------------------------------------------------
+#Requests ------------------------------------------------------------------------------------------------
 
 import requests
 import pandas as pd
@@ -218,39 +217,51 @@ print(myShape)
 yourShape = Shape(4)
 print(yourShape)"
 
-#-------------------Pandas memo---------------------------------------------
+#-------------------Pandas General memo---------------------------------------------
 
-#pandasインポートとデータセット読み込み
 import pandas as pd
+
 df_train = pd.read_csv('train.csv')
+df_train.to_csv('modified.csv')
 
-#describe
+df_temp = df.copy()
+
 df_train.describe()
-
-#info
 df_train.info()
-
-#欠損値の数をカウント
 df_train.isnull().sum()
-
-#項目ごとの最大値を取得
-n_oldest = df_train.Age.max()
-
-#最大値をもつ行を取得する方法
-df_train[df_train.Age==n_oldest]
-
-#相関係数
 df_tmp.corr()
 
-#ダミー変数化処理用関数
+df_train = pd.concat((df_train, df_x), axis = 1)
+df_family = pd.Series(list_family, name = "Family")
+l_names = df_train.Name.values.tolist()
 
+n_oldest = df_train.Age.max()
+df_x = df_train[df_train.Age==n_oldest]
+df_x = df_train[df_train.Age>=40]
+n_family = df_train.Family.apply(lambda x: (df_train.Family == x).sum())
+
+a = df_train.Sex == 'male'
+a.sum()
+
+df_tmp = df_train.dropna()
+df_tmp = df_train.fillna(0)
+df_tmp = df_tmp.drop('ColumnName',axis = 1)
+
+cabin_known_ratio = len(df_train[((df_train.Cabin.isnull()==False) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()==False])
+cabin_unknown_ratio = len(df_train[((df_train.Cabin.isnull()) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()])
+
+male_survived_ratio = len(df_train[(df_train.Sex == 'male') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'male'])
+female_survived_ratio = len(df_train[(df_train.Sex == 'female') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'female'])
+
+
+#-------------------Pandas ダミー変数化
 def dummylize(df,n_item):
     dum = pd.get_dummies(df[n_item], drop_first = True)
     df = pd.concat((df, dum),axis = 1)
     df = df.drop(n_item,axis = 1)
     return df
 
-#nullを0、それ以外を1とする関数
+#-------------------Pandas nullを0、それ以外を1とする
 def booleanize(df,n_item):
     df_tmp = df[n_item].notnull() * 1
     df_tmp.name = n_item
@@ -259,213 +270,24 @@ def booleanize(df,n_item):
     df = pd.concat((df, df_tmp), axis = 1)
     return df
 
-#カテゴリを数値化する関数
-
+#-------------------Pandas カテゴリを数値化 2
 def categorize(df,n_item):
     labels, uniques = pd.factorize(df[n_item])
     df[n_item] = labels
     return df
 
+#-------------------Pandas カテゴリを数値化 2 ["Miss","Mr","Mrs","Master","Miss"] → [0,1,2,3,0]
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+num_cat = le.fit_transform(str_categories)
+df_n_cat = pd.Series(num_cat, name='NumCat')
 
-#カテゴリをOne-Hot化
+#-------------------Pandas カテゴリをOne-Hot化
 y_train = keras.utils.np_utils.to_categorical(y_train.astype('int32'),10)
 
-
-#条件で要素抜出し
-df_x = df_train[df_train.Age>=40]
-
-#項目のある値の出現頻度をカウント
-a = df_train.Sex == 'male'
-a.sum()
-
-#欠損データの行削除
-df_tmp = df_train.dropna()
-
-#不要行削除
-df_tmp = df_tmp.drop('PassengerId',axis = 1)
-df_tmp = df_tmp.drop('Name',axis = 1)
-df_tmp = df_tmp.drop('Ticket',axis = 1)
-df_tmp = df_tmp.drop('Cabin',axis = 1)
-
-
-
-#性別・年代別の生存率を散布図プロット
-
-import matplotlib.pyplot as plt
-plt.style.use('ggplot')
-
-df_draw = df_tmp[df_tmp.Survived==1]
-df_age = df_draw.iloc[:,2]
-df_sex = df_draw.iloc[:,6]
-plt.scatter(df_age,df_sex, color='#cc6699',alpha=0.5)
-
-df_draw = df_tmp[df_tmp.Survived==0]
-df_age = df_draw.iloc[:,2]
-df_sex = df_draw.iloc[:,6]
-plt.scatter(df_age,df_sex, color='#6699cc',alpha=0.5)
-
-plt.show()
-
-
-#キャビン番号が分かっているケースと不明のケースの生存率比較
-
-cabin_known_ratio = len(df_train[((df_train.Cabin.isnull()==False) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()==False])
-cabin_unknown_ratio = len(df_train[((df_train.Cabin.isnull()) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()])
-
-
-#男女生存率を比較
-
-male_survived_ratio = len(df_train[(df_train.Sex == 'male') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'male'])
-female_survived_ratio = len(df_train[(df_train.Sex == 'female') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'female'])
-sex_survived_ratio = [male_survived_ratio, female_survived_ratio]
-plt.bar([0,1], sex_survived_ratio, tick_label=['male', 'female'], width=0.5)
-plt.show()
-
-
-#年代別　男女生存比率　比較チャート
-
-male_df = df_train[df_train.Sex == 'male']
-female_df = df_train[df_train.Sex == 'female']
-
-male_age_survived_ratio_list = []
-female_age_survived_ratio_list = []
-for i in range(0, int(max(df_train.Age))+1, 10):
-    male_df_of_age = male_df[(male_df.Age >= i) & (male_df.Age < i+9)]
-    female_df_of_age = female_df[(female_df.Age >= i) & (female_df.Age < i+9)]
-
-    male_s = len(male_df_of_age[male_df_of_age.Survived == 1])
-    female_s = len(female_df_of_age[female_df_of_age.Survived == 1])
-
-    male_total = len(male_df_of_age)
-    female_total = len(female_df_of_age)
-
-    if male_total  == 0:
-        male_age_survived_ratio_list.append(0.5)
-    else:
-        male_age_survived_ratio_list.append(male_s/male_total)
-
-    if female_total == 0:
-        female_age_survived_ratio_list.append(0.5)
-    else:
-        female_age_survived_ratio_list.append(female_s/female_total)
-
-print(male_age_survived_ratio_list, female_age_survived_ratio_list)
-
-x_labels = []
-for i in range(0, int(max(df_train.Age))+1, 10):
-    x_labels.append(str(i) + '-' + str(i+9))
-
-plt.figure(figsize=(16,8))
-x1 = [i for i in range(0, int(max(df_train.Age))+ 1, 10)]
-x2 = [i + 2 for i in range(0, int(max(df_train.Age))+ 1, 10)]
-plt.bar(x1, male_age_survived_ratio_list, tick_label=x_labels, width=3, color='blue')
-plt.bar(x2,female_age_survived_ratio_list, tick_label=x_labels, width=3, color='red')
-plt.tick_params(labelsize = 15)
-plt.show()
-
-
-#ファミリーネーム抜出し
-
-l_names = [x.replace(",","").replace(".","").split(" ") for x in df_train.Name.values.tolist()]
-l_family = [x[0] for x in l_names]
-df_family = pd.Series(l_family, name = "Family")
-
-#ファミリーネームの列を追加
-
-df_train = pd.concat((df_train, df_family), axis = 1)
-df_train.head()
-
-#ファミリーネームの出現回数列を追加
-
-n_family = df_train.Family.apply(lambda x: (df_train.Family == x).sum())
-n_family.name = 'FamilyNum'
-df_train = pd.concat((df_train, n_family), axis = 1)
-
-#家族の構成人数ごとの生存率比較
-
-f1_ratio = len(df_train[((df_train.FamilyNum == 1) & (df_train.Survived == 1))]) / len(df_train[df_train.FamilyNum == 1])
-f23_ratio = len(df_train[((df_train.FamilyNum >= 2) & (df_train.FamilyNum <= 3) & (df_train.Survived == 1))]) / len(df_train[((df_train.FamilyNum >= 2) & (df_train.FamilyNum <= 3))])
-f4_ratio = len(df_train[((df_train.FamilyNum >= 4) & (df_train.Survived == 1))]) / len(df_train[df_train.FamilyNum >= 4])
-
-l_ratios = []
-l_ratios.append(f1_ratio)
-l_ratios.append(f23_ratio)
-l_ratios.append(f4_ratio)
-l_ratios
-
-plt.bar(['1','2-3','4+'],l_ratios)
-plt.show()
-
-
-
-#-----------------------------------------------------------------------------
-
-
-#ダミー変数化処理用関数
-
-def dummylize(df,n_item):
-    dum = pd.get_dummies(df[n_item], drop_first = True)
-    df = pd.concat((df, dum),axis = 1)
-    df = df.drop(n_item,axis = 1)
-    return df
-
-
-#nullを0、それ以外を1とする関数
-def booleanize(df,n_item):
-    df_tmp = df[n_item].notnull() * 1
-    df_tmp.name = n_item
-
-    df = df.drop(n_item,axis = 1)
-    df = pd.concat((df, df_tmp), axis = 1)
-    return df
-
-
-#Listを含まれるタイトルのみの文字列に変換するサブ関数
-
-def titleCheck(L):
-        if 'Miss' in L: return 'Miss'
-        elif 'Mrs' in L: return 'Mrs'
-        elif 'Master' in L: return 'Master'
-        elif 'Mr' in L: return 'Mr'
-        else: return ""
-
-
-#処理関数メイン
-
-def nameAnalysis(df):
-
-    l_names = [x.replace(",","").replace(".","").split(" ") for x in df.Name.values.tolist()]
-#Mr. Mrs. などを仕分け
-    l_title = [titleCheck(x) for x in l_names]
-    df_title = pd.Series(l_title, name='Titles')
-
-#Mr. Mrs. などを数値化
-    from sklearn.preprocessing import LabelEncoder
-
-    le = LabelEncoder()
-    num_title = le.fit_transform(l_title)
-    df_n_title = pd.Series(num_title, name='TitlesNum')
-
-#ファミリーネーム抜出し
-
-    l_family = [x[0] for x in l_names]
-    df_family = pd.Series(l_family, name = "Family")
-
-#ファミリーネームの出現回数列を追加
-    df_n_family = df_family.apply(lambda x: (df_family == x).sum())
-    df_n_family.name = 'FamilyNum'
-
-#作成した各分析列を追加しリターン
-    df = pd.concat((df, df_title), axis = 1)
-    df = pd.concat((df, df_n_title), axis = 1)
-    df = pd.concat((df, df_family), axis = 1)
-    df = pd.concat((df, df_n_family), axis = 1)
-        
-    return df
-
-
-#年齢を世代区分け
-
+#-------------------Pandas 列加工もろもろ
+choice = ["Miss","Mr","Mrs","Master"]
+l_title = [list(set(x).intersection(set(choice)))[0] for x in l_names]     # ["Mr","Johnny","Depp"] -> "Mr"
 
 def ageGroup(x):
         if 0 <= x and x < 10:
@@ -478,35 +300,12 @@ def ageGroup(x):
             return 3
         elif 60 <= x:
             return 4
-
 df_train.Age = df_train.Age.apply(lambda x: ageGroup(x))
 
-
-#年齢推定モデルに渡すためテスト用加工済みCSVを保存
-
-df_train.to_csv('forAgePred.csv')
-
-#Age欠損部分を年齢推定モデルを使い補完する処理まとめ関数
-
-def fillMissingAge(df):
-
-    #モデルを使って予測し結果をリストに保存→Seriesに変換
-    l_pred = ['TitlesNum']
-    res_pred = model_age_pred.predict(df[l_pred])
-    df_res_pred =pd.Series(res_pred, name='prediction')
-    df_res_pred = df_res_pred.apply(lambda x: float(x/100))
-
-    df_real_age = df['Age']
-    df_real_age = df_real_age.fillna(0)
-
-
-    #もともとのAge列の欠損値のみPredictの結果で置き換え　(もっといいやり方があるはず)
-
-    df_real_age = df['Age']
-    df_real_age = df_real_age.fillna(0)
-
+#-------------------Pandas NaN 部分のみを予測モデルで補完 
+    df_res_pred = model.predict(X)
+    df_real_age = df['Age'].fillna(0)
     l_mix = []
-
     for i,v in enumerate(df_real_age):
         if v != 0:
             l_mix.append(v)
@@ -514,105 +313,70 @@ def fillMissingAge(df):
             l_mix.append(df_res_pred[i])
 
     df_mix = pd.Series(l_mix, name='Age')
-
-    #Age列を差し替え
     df = df.drop('Age',axis = 1)
     df = pd.concat((df,df_mix),axis = 1)
 
-    return df
+#-------------------Matplot General memo---------------------------------------------
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+df_draw = df_tmp[df_tmp.Survived==1]
+df_age = df_draw.iloc[:,2]
+df_sex = df_draw.iloc[:,6]
+plt.scatter(df_age,df_sex, color='#cc6699',alpha=0.5)
+df_draw = df_tmp[df_tmp.Survived==0]
+df_age = df_draw.iloc[:,2]
+df_sex = df_draw.iloc[:,6]
+plt.scatter(df_age,df_sex, color='#6699cc',alpha=0.5)
+plt.show()
 
+sex_survived_ratio = [male_survived_ratio, female_survived_ratio]
+plt.bar([0,1], sex_survived_ratio, tick_label=['male', 'female'], width=0.5)
+plt.show()
 
-# scikit-learn, 機械学習関連メモ--------------------------------------------------------------------------------
-
-#別NoteBookの処理で作成・保存した年齢推定モデルの読み込み
-
+#機械学習関連メモ General --------------------------------------------------------------------------------
+#モデル保存
 import pickle
-filename = 'age_pred.sav'
-model_age_pred = pickle.load(open(filename, 'rb'))
+filename = 'xgb_model.sav'
+pickle.dump(model_final, open(filename, 'wb'))
+
+#モデル読み込み
+import pickle
+filename = 'xgb_model.sav'
+loaded_m_xgb = pickle.load(open(filename, 'rb'))
 
 #学習・テスト用データセット整備
-
 from sklearn.model_selection import train_test_split
 df_train = df_train.fillna(0)
 l_features = ['Pclass','male','Q','S','TitlesNum','FamilyNum','Cabin','Age','SibSp','Parch','Fare']
-df_x_pack = df_train[l_features]
-df_y_pack = df_train.Survived
-X_train, X_test, y_train, y_test = train_test_split(df_x_pack, df_y_pack, test_size=0.25)
+df_x = df_train[l_features]
+df_y = df_train.Survived
+x_train, x_test, y_train, y_test = train_test_split(df_x, df_y, test_size=0.25)
 
-
-#model 比較
-
+#model 比較  --------------------------------------------------------------------------------------------------
 from sklearn.metrics import mean_squared_error
-
 models =[]
 models.append(model_xgb)
 models.append(model_randForest)
 models.append(model_MLPC)
-
 for model in models:    
     res_tmp = model.predict(X_test)
     res_mean = mean_squared_error(y_test, res_tmp)
     print('mean squared error:{0} '.format(res_mean))
 
-
-#モデル保存
-
-import pickle
-filename = 'xgb_model.sav'
-pickle.dump(model_final, open(filename, 'wb'))
-
-
-#モデル読み込み
-
-import pickle
-filename = 'xgb_model.sav'
-loaded_m_xgb = pickle.load(open(filename, 'rb'))
-
-
-#予測結果を提出用CSVに整理
-
-df_X_forSubmit = df_test[l_features]
-Y_forSubmit = loaded_m_xgb.predict(df_X_forSubmit)
-Y_forSubmit_int = [0 if x <=0.5 else 1 for x in Y_forSubmit]
-
-df_Y = pd.Series(Y_forSubmit_int, name='Survived')
-df_submit = df_test.PassengerId.copy()
-
-df_submit = pd.concat((df_submit,df_Y),axis=1)
-
-df_submit.head()
-df_submit.to_csv('submission.csv', index = False)
-
-
-
-#Grid Search Cross Validationでモデルを学習させる--------------------------------------------------------------
-
+#Grid Search Cross Validation-----------------------------------------------------------------------------------
 def applyGSCV(model, param, X, Y):
     from sklearn.model_selection import GridSearchCV
-
     res = GridSearchCV(model, param, cv=3)
     res.fit(X, Y)
-
     return res
-
-#選択したモデルを学習させる
-
 from sklearn.ensemble import RandomForestClassifier
 model_selected = RandomForestClassifier()
-
 obj_param = {
 'n_estimators': [5,10,20,30,50,100,300],
 'max_depth': [3,5,10,15,20,25,30,40,50,100],
 'random_state': [0]
 }
-
-df_feature = df["familyNum","titleNum"]
-df_answer = df["Age"]
-
-model_final = applyGSCV(model_selected, obj_param, df_feature, df_answer)
-
-print('done')
-
+model_final = applyGSCV(model, obj_param, df_x, df_y)
 
 #XGBoostモデル--------------------------------------------------------------------------------
 
