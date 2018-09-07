@@ -479,45 +479,44 @@ for n in names:
     print(n)
     print('avg: {0:,.2f} / median: {1:,.2f}'.format(sum(r)/len(r), statistics.median(r)))
 
-#Tensorflow 使用例--------------------------------------------------------------------------
-import tensorflow as tf
+#Tensorflow モデル保存 & 読み込み--------------------------------------------------------------------------
+#Save
+saver = tf.train.Saver()
+saver.save(sess, '../model/test_model')
+#Read
+saver = tf.train.Saver()
+saver.restore(sess, '../model/test_model')
 
+#Tensorflow 使用例 1 --------------------------------------------------------------------------
+import tensorflow as tf
 # Model parameters (variables of function to be learned via machine learning)
 W = tf.Variable([0.], dtype=tf.float32)
 b = tf.Variable([0.], dtype=tf.float32)
-
 # Model input and output (sets of data and result)
 x = tf.placeholder(tf.float32)
 y = tf.placeholder(tf.float32)
-
 # Model itself
 linear_model = W*x + b
-
 # loss
 deltas = linear_model - y
 square_deltas = tf.square(deltas)
 loss = tf.reduce_sum(square_deltas) # sum of the squares
-
 # optimizer
 optimizer = tf.train.GradientDescentOptimizer(0.01)
 train = optimizer.minimize(loss)
-
 # training data
 x_dataset = [1, 2, 3, 4]
 y_dataset = [0, -1, -2, -3]
-
 # training loop
 init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init) 
-
 for x in range(1000):
   sess.run(train, {x: x_dataset, y: y_dataset})
     if (x+1) % 100 == 0:
         print('\nStep: %s' % (x+1))
         print('loss: ' + str(sess.run(train, {x: x_dataset, y: y_dataset})))
         print("W: %f, b: %f" % (sess.run( W ), sess.run( b )) )
-
 # evaluate training accuracy
 ans_W, ans_b, ans_loss = sess.run([W, b, loss], {x: x_dataset, y: y_dataset})
 print("W: %s b: %s loss: %s"%(ans_W, ans_b, ans_loss))
