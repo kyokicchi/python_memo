@@ -9,6 +9,7 @@ DATA = DATA.split()
 
 #PrintのFormating
 print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
+print("a: %f, b: %f" %(a , b))
 
 #Enumerate
 x=["item1","item2","item3"]
@@ -379,16 +380,12 @@ obj_param = {
 model_final = applyGSCV(model, obj_param, df_x, df_y)
 
 #XGBoostモデル--------------------------------------------------------------------------------
-
 def xgb_model(X, Y):
     import xgboost as xgb
-
     import scipy.stats as st
     from sklearn.model_selection import RandomizedSearchCV
-
     one_to_left = st.beta(10, 1)
     from_zero_positive = st.expon(0, 50)
-
     params = {
         "n_estimators": st.randint(3, 40),
         "max_depth": st.randint(3, 40),
@@ -399,47 +396,29 @@ def xgb_model(X, Y):
         'reg_alpha': from_zero_positive,
         "min_child_weight": from_zero_positive,
     }
-
     xgbreg = xgb.XGBRegressor(nthreads=-1)
-
-
     gs = RandomizedSearchCV(xgbreg, params, n_jobs=3)
     res = gs.fit(X, Y)
     print(gs.best_params_)
-
     return res
-
-#XGBモデル学習
-
 model_xgb = xgb_model(X_train, y_train)
 
-
-
 #Random Forestモデル--------------------------------------------------------------------------------
-
 from sklearn.ensemble import RandomForestClassifier
-
 obj_param = {
-'n_estimators': [5,10,20,30,50,100,300],
-'max_depth': [3,5,10,15,20,25,30,40,50,100],
-'random_state': [0]
+    'n_estimators': [5,10,20,30,50,100,300], 'max_depth': [3,5,10,15,20,25,30,40,50,100], 'random_state': [0]
 }
-
 model_randForest = applyGSCV(RandomForestClassifier(),obj_param,X_train, y_train)
 
-print('done')
-
 #MLPCモデル--------------------------------------------------------------------------------
-
 from sklearn.neural_network import MLPClassifier
 model_MLPC =  MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
 
-
 #Keras NNモデル---------------------------------------------------------------------------------------
-
 import keras.optimizers
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
+from keras.utils import to_categorical
 
 N = len(l_features)
 model_NN = Sequential()
@@ -448,26 +427,17 @@ model_NN.add(Dense(2,activation='softmax', kernel_initializer='uniform'))
 sgd = keras.optimizers.SGD(lr = 0.5, momentum = 0.0,decay = 0.0, nesterov = False)
 model_NN.compile(optimizer = sgd, loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
-from keras.utils import to_categorical
-
 y_train_bin = to_categorical(y_train)
 y_test_bin = to_categorical(y_test)
 
-
 history = model_NN.fit(X_train, y_train_bin, batch_size=100,epochs=1000,verbose=0,validation_data=(X_test, y_test_bin))
+history.history['acc'] #対trainデータ正確性
+history.history['val_acc'] #対testデータ正確性
 
-#対trainデータ正確性
-history.history['acc']
-
-#対testデータ正確性
-history.history['val_acc']
-
-#score[0]が交差エントロピー誤差、score[1]がテストデータ正答率
-score = model_NN.evaluate(X_test, y_test_bin, verbose = 0)
-print(score[0], score[1])
+score = model_NN.evaluate(X_test, y_test_bin, verbose = 0) 
+print(score[0], score[1]) #score[0]が交差エントロピー誤差、score[1]がテストデータ正答率
 
 #複数のモデルをざっくり試す----------------------------------------------------------------------------
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC, LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
@@ -476,17 +446,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-
-names = ['LogisticRegression',
-  'SVC',
-  'LinearSVC',
-  'KNeighbors',
-  'DecisionTree',
-  'RandomForest',
-  'MLPClassifier']
-
+names = ['LogisticRegression', 'SVC', 'LinearSVC', 'KNeighbors', 'DecisionTree', 'RandomForest', 'MLPClassifier']
 l_models = []
-
 l_models.append(("LogisticRegression", LogisticRegression()))
 l_models.append(("SVC", SVC()))
 l_models.append(("LinearSVC", LinearSVC()))
@@ -494,7 +455,6 @@ l_models.append(("KNeighbors", KNeighborsClassifier()))
 l_models.append(("DecisionTree", DecisionTreeClassifier()))
 l_models.append(("RandomForest", RandomForestClassifier()))
 l_models.append(("MLPClassifier", MLPClassifier(solver='lbfgs', random_state=0)))
-
 def evaluate_models(df_forAgePred, l_pred, l_models):
     results = []
     names = []
@@ -506,9 +466,6 @@ def evaluate_models(df_forAgePred, l_pred, l_models):
         names.append(name)
         results.append(result)
     return names, results
-
-#各モデルを使いテスト
-
 import statistics
 result_list = []
 for i in range(0,10):
@@ -516,18 +473,13 @@ for i in range(0,10):
     name, res = evaluate_models(df_forAgePred, l_pred, l_models)
     for x, y in zip(name, res):
         result_list.append([x, y])
-
-#結果表示
 print('mean squared error results by model')
-print()
 for n in names:
     r = [i[1] for i in result_list if i[0] == n]
     print(n)
     print('avg: {0:,.2f} / median: {1:,.2f}'.format(sum(r)/len(r), statistics.median(r)))
 
-
 #Tensorflow 使用例--------------------------------------------------------------------------
-
 import tensorflow as tf
 
 # Model parameters (variables of function to be learned via machine learning)
@@ -559,50 +511,18 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init) 
 
-for _ in range(1000):
+for x in range(1000):
   sess.run(train, {x: x_dataset, y: y_dataset})
+    if (x+1) % 100 == 0:
+        print('\nStep: %s' % (x+1))
+        print('loss: ' + str(sess.run(train, {x: x_dataset, y: y_dataset})))
+        print("W: %f, b: %f" % (sess.run( W ), sess.run( b )) )
 
 # evaluate training accuracy
 ans_W, ans_b, ans_loss = sess.run([W, b, loss], {x: x_dataset, y: y_dataset})
 print("W: %s b: %s loss: %s"%(ans_W, ans_b, ans_loss))
 
-
 # Tensorflow 使用例 2 ------------------------------------------------------------------
-import sys
-import tensorflow as tf
-
-sys.stderr.write("*** start ***\n")
-
-dataset_x = [[1.],[5.]]
-dataset_y = [[4.],[2.]]
-
-x = tf.placeholder("float", [None, 1])
-y_ = tf.placeholder("float", [None, 1])
-
-W = tf.Variable([1.])
-b = tf.Variable([0.])
-y = W*x + b
-
-sess = tf.Session()
-init = tf.global_variables_initializer()
-loss = tf.reduce_sum(tf.square(y_ - y))
-train_step = tf.train.GradientDescentOptimizer(0.03).minimize(loss)
-
-sess.run(init)
-print('Initial state')
-print('loss: ' + str(sess.run(loss, feed_dict={x: dataset_x, y_: dataset_y})))
-print("W: %f, b: %f" % (sess.run( W ), sess.run( b )) )
-
-for step in range(100):
-    sess.run(train_step, feed_dict={x: dataset_x, y_: dataset_y})
-    if (step+1) % 20 == 0:
-        print('\nStep: %s' % (step+1))
-        print('loss: ' + str(sess.run(loss, feed_dict={x: dataset_x, y_: dataset_y})))
-        print("W: %f, b: %f" % (sess.run( W ), sess.run( b )) )
-
-
-
-# Tensorflow 使用例 3 ------------------------------------------------------------------
 
 import numpy as np
 import tensorflow as tf
@@ -632,7 +552,7 @@ print("train data vs model: %r" % ans_train_data)
 print("eval data vs model: %r" % ans_eval_data)
 
 
-# Tensorflow 使用例 4 ------------------------------------------------------------------
+# Tensorflow 使用例 3 ------------------------------------------------------------------
 
 import numpy as np
 import tensorflow as tf
