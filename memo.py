@@ -11,6 +11,9 @@ DATA = DATA.split()
 print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
 print("a: %f, b: %f" %(a , b))
 
+#改行なし Print
+print(text,end='')
+
 #Enumerate
 x=["item1","item2","item3"]
 for index,item in enumerate(x):
@@ -78,10 +81,7 @@ set_b.discard(0)
 
 set_union = set_a.union(set_b)
 set_intersection = set_a.intersection(set_b,set_c)
-set_difference = set_a.difference(set_b)
 set_differences = set_a.difference(set_b,set_c)
-set_difference_1 = set_a.difference(set_b)
-set_difference_2 = set_b.difference(set_a)
 set_symmetric_difference = set_a.symmetric_difference(set_b)
 
 #-------------------Dictionary 関連---------------------------------------------
@@ -104,11 +104,11 @@ L = list(str)
 str2 = "".join(L)
 
 phrase = "A bird in the hand..."
-for char in phrase:
-    if char.lower() == 'a':
+for c in phrase:
+    if c.lower() == 'a':
         print('X',end='')
     else:
-        print(char,end='')
+        print(c,end='')
 
 #-------------------Binary 関連---------------------------------------------
 x = 0b1001 + 0b1001
@@ -118,38 +118,33 @@ print (int("0b100",2))
 print (bin(5))
 print (int(bin(5),2))
 
-#-------------------JSON、入出力 関連---------------------------------------------
+#-------------------JSON入出力---------------------------------------------
 import json
 dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
 f = open('output.json', 'w')
 json.dump(dic, f)
 f.close()
-f = open('output.json', 'r')
-loaded_dic = json.load(f)
-f.close()
-print("loaded dictionary is: ", loaded_dic)
 
+f = open('output.json', 'r')
+dic = json.load(f)
+f.close()
+
+#-------------------ファイル入出力---------------------------------------------
 #ファイル入出力
 item = "content"
 f = open("output.txt", "w")
 f.write(item + "\n")
 f.close()
 
-
 #Requests ------------------------------------------------------------------------------------------------
-
 import requests
 import pandas as pd
-
 git_res = requests.get('https://api.github.com/search/repositories?q=language:python+created:2017-07-28&per_page=3')
 outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','git_url','updated_at','created_at']]
-
 #print(git_res.text)
 print(outP)
 
-
 # Class 使用例------------------------------------------------------------------------------------------------------------
-
 class Student:
     def __init__(self, name, grade, age):
         self.name = name
@@ -157,18 +152,17 @@ class Student:
         self.age = age
     def __repr__(self):
         return repr((self.name, self.grade, self.age))
-
-student_objects = [
+l_obj_students = [
     Student('john', 'A', 15),
     Student('jane', 'B', 12),
     Student('dave', 'B', 10),
 ]
 
 # ageでsort
-print(sorted(student_objects, key=attrgetter('age'))) 
+print(sorted(l_obj_students, key=attrgetter('age'))) 
 
 # gradeでsort さらにageでsort
-print(sorted(student_objects, key=attrgetter('grade', 'age')))
+print(sorted(l_obj_students, key=attrgetter('grade', 'age')))
 
 
 # Class 使用例 2 ------------------------------------------------------------------------------------------------------------
@@ -219,41 +213,36 @@ yourShape = Shape(4)
 print(yourShape)"
 
 #-------------------Pandas General memo---------------------------------------------
-
 import pandas as pd
 
-df_train = pd.read_csv('train.csv')
-df_train.to_csv('modified.csv')
+df = pd.read_csv('train.csv')
+df.to_csv('modified.csv')
 
-df_temp = df.copy()
+df_temp = df.copy() #こうしないと参照コピーになる
 
-df_train.describe()
-df_train.info()
-df_train.isnull().sum()
-df_tmp.corr()
+df.describe()
+df.info()
+df.isnull().sum()
+df.corr()
 
-df_train = pd.concat((df_train, df_x), axis = 1)
-df_family = pd.Series(list_family, name = "Family")
-l_names = df_train.Name.values.tolist()
+df = df.fillna(0)
+df = pd.concat((df, df_x), axis = 1)
+df = df.dropna()
+df = df.drop('ColumnName',axis = 1)
 
-n_oldest = df_train.Age.max()
-df_x = df_train[df_train.Age==n_oldest]
-df_x = df_train[df_train.Age>=40]
-n_family = df_train.Family.apply(lambda x: (df_train.Family == x).sum())
+df_x = pd.Series(l_x, name = "ColumnName")
+l_names = df.Name.values.tolist()
 
-a = df_train.Sex == 'male'
+n_oldest = df.Age.max()
+df_x = df[df.Age==n_oldest]
+df_x = df[df.Age>=40]
+n_family = df.Family.apply(lambda x: (df.Family == x).sum())
+
+a = df.Sex == 'male'
 a.sum()
 
-df_tmp = df_train.dropna()
-df_tmp = df_train.fillna(0)
-df_tmp = df_tmp.drop('ColumnName',axis = 1)
-
-cabin_known_ratio = len(df_train[((df_train.Cabin.isnull()==False) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()==False])
-cabin_unknown_ratio = len(df_train[((df_train.Cabin.isnull()) & (df_train.Survived == 1))]) / len(df_train[df_train.Cabin.isnull()])
-
-male_survived_ratio = len(df_train[(df_train.Sex == 'male') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'male'])
-female_survived_ratio = len(df_train[(df_train.Sex == 'female') & (df_train.Survived == 1)]) / len(df_train[df_train.Sex == 'female'])
-
+cabin_known_ratio = len(df[((df.Cabin.isnull()==False) & (df.Survived == 1))]) / len(df[df.Cabin.isnull()==False])
+cabin_unknown_ratio = len(df[((df.Cabin.isnull()) & (df.Survived == 1))]) / len(df[df.Cabin.isnull()])
 
 #-------------------Pandas ダミー変数化
 def dummylize(df,n_item):
@@ -261,6 +250,9 @@ def dummylize(df,n_item):
     df = pd.concat((df, dum),axis = 1)
     df = df.drop(n_item,axis = 1)
     return df
+
+#-------------------Pandas カテゴリをOne-Hot化
+y_train = keras.utils.np_utils.to_categorical(y_train.astype('int32'),10)
 
 #-------------------Pandas nullを0、それ以外を1とする
 def booleanize(df,n_item):
@@ -283,8 +275,6 @@ le = LabelEncoder()
 num_cat = le.fit_transform(str_categories)
 df_n_cat = pd.Series(num_cat, name='NumCat')
 
-#-------------------Pandas カテゴリをOne-Hot化
-y_train = keras.utils.np_utils.to_categorical(y_train.astype('int32'),10)
 
 #-------------------Pandas 列加工もろもろ
 choice = ["Miss","Mr","Mrs","Master"]
@@ -302,6 +292,14 @@ def ageGroup(x):
         elif 60 <= x:
             return 4
 df_train.Age = df_train.Age.apply(lambda x: ageGroup(x))
+
+#-------------------Pandas cut
+pd.cut(df, [0, 10, 50, 100])
+pd.cut(df, 4, right=False)
+counts = pd.cut(df, 3, labels=['S', 'M', 'L']).value_counts()
+s_cut, bins = pd.cut(df, 4, retbins=True)
+print(s_cut)
+print(bins)
 
 #-------------------Pandas NaN 部分のみを予測モデルで補完 
     df_res_pred = model.predict(X)
