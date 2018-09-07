@@ -1,95 +1,33 @@
 #-------------------General memo---------------------------------------------
-
 # coding: utf-8
-
-
-
-#-----------------------------------------------------------------------------
-
-# coding: utf-8
-
-# In[3]:
-
-
-# coding: utf-8
-import sys
-DATA = sys.stdin.read()
-
-
-
-# In[8]:
-
-
-# coding: utf-8
+#よくやる標準入力受け取り
 import sys
 DATA = sys.stdin.read()
 DATA = DATA.replace("\n","")
 DATA = DATA.split()
-print(DATA)
+
+#PrintのFormating
+print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
 
 
-# In[11]:
 
+#List処理関連
+my_list = list(range(1, 11))
+backwards = my_list[::-1]
 
-X = " this \n is an example \n input  \n \n  "
-X = X.replace("\n","")
-L = X.split()
-print(X)
-print(L)
-
-
-# In[2]:
-
-
-INFOSET = ["score","40","50","80"]
-GENRE = INFOSET.pop(0)
-TTLSCORE = sum(map(lambda x: int(x), INFOSET))
-print(GENRE)
-print(INFOSET)
-print(TTLSCORE)
-
-
-# In[10]:
-
-
-str = "abcde"
-L = list(str)
-str2 = "".join(L)
-print(L)
-print(str2)
-
-
-# In[18]:
-
-
-def biggest_number(*args):
-    return max(args)
-X = biggest_number(-10, -5, 5, 10)
-print(X)
-
-
-# In[15]:
-
+l_data = ["score","40","50","80"]
+tmp = l_data.pop(0)
+n_total = sum(map(lambda x: int(x), l_data))
 
 evens_to_50 = [x for x in range(51) if x % 2 == 0]
 even_squares = [x**2 for x in range(1,11) if x % 2 == 0]
 threes_and_fives = [x for x in range(1,16) if x %3 == 0 or x % 5 == 0]
-print(evens_to_50)
-print(even_squares)
-print(threes_and_fives)
 
-
-# In[5]:
-
+my_list = list(filter(lambda x: x % 3 == 0,range(16)))
+squares = list(filter(lambda x:x>=30 and x<= 70,[x**2 for x in range(1,11)]))
 
 li = [3, 4, 3, 2, 5, 4]
 li_unique = list(set(li))
-print(li)
-print(li_unique)
-
-
-# In[6]:
-
 
 l = [1,1,2,3,4,4,5,10]
 if all(x < 10 for x in l):
@@ -97,45 +35,44 @@ if all(x < 10 for x in l):
 if any(x >= 10 for x in l):
     print("There is a number greater than 10")
 
+animals = ["aardvark", "badger", "duck", "emu", "fennec fox"]
+duck_index = animals.index("duck")
+animals.insert(duck_index,"cobra")
 
-# In[3]:
+list_a = [3, 9, 17, 15, 19]
+list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
+for a, b in zip(list_a, list_b):
+    print(max(a,b), end="  ")
 
+#Dictionary関連
+my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
+print(my_dict.items())
+print(my_dict.keys())
+print(my_dict.values())
 
+candidates = {"a":15, "b":25, "c":35}
+winnerVote = int(max(candidates.values()))
+
+#Enumerate
+x=["item1","item2","item3"]
+for index,item in enumerate(x):
+    print(index,":",item)
+
+y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
+for index,key in enumerate(y):
+    print("{0} : {1} : {2}".format(index,key,y[key]))
+
+#Function 引数の個数指定なし
+def biggest_number(*args):
+    return max(args)
+X = biggest_number(-10, -5, 5, 10)
+
+#Sort関連
 orig = {"1": 3,  "3": 1, "2": 2}
 sortByKey = sorted(orig.items())
 sortByVal = sorted(orig.items(), key=lambda x:x[1])
 
-print(orig)
-print(sortByKey)
-print(sortByVal)
-
-
-# In[6]:
-
-
-my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
-print(my_dict.items())
-print(my_dict.keys())
-print(my_dict.values())
-
-candidates = {"a":15, "b":25, "c":35}
-winnerVote = int(max(candidates.values()))
-print(winnerVote)
-
-
-# In[20]:
-
-
-animals = ["aardvark", "badger", "duck", "emu", "fennec fox"]
-duck_index = animals.index("duck")
-print(duck_index)
-animals.insert(duck_index,"cobra")
-print(animals)
-
-
-# In[15]:
-
-
+#Set関連
 set_a = {7,9,2}
 set_b = {9,22,2,25}
 set_c = {9,18,21,5}
@@ -151,428 +88,55 @@ set_difference_1 = set_a.difference(set_b)
 set_difference_2 = set_b.difference(set_a)
 set_symmetric_difference = set_a.symmetric_difference(set_b)
 
-print("set_union {0}".format(set_union))
-print("set_intersection {0}".format(set_intersection))
-print("set_difference {0}".format(set_difference))
-print("set_differences {0}".format(set_differences))
-print("set_difference_1 {0}".format(set_difference_1))
-print("set_difference_2 {0}".format(set_difference_2))
-print("set_symmetric_difference {0}".format(set_symmetric_difference))
-
-
-# In[24]:
-
-
-phrase = "A bird in the hand..."
-
-for char in phrase:
-    if char.lower() == 'a':
-        print('X',end='')
-    else:
-        print(char,end='')
-
-
-# In[3]:
-
-
-my_list = list(filter(lambda x: x % 3 == 0,range(16)))
-squares = list(filter(lambda x:x>=30 and x<= 70,[x**2 for x in range(1,11)]))
-
-print( my_list)
-print(squares)
-
-
-# In[16]:
-
-
-print(0b1001)
-x = 0b1001 + 0b1001
-y = 0b1001 * 0b1001
-print(x, y)
-
-for x in range(0,6):
-    print(bin(x), end="  ")
-
-print(0b101)
-
-print (int("111",2))
-print (int("0b100",2))
-print (int(bin(5),2))
-
-
-# In[37]:
-
-
-from collections import Counter
-c = Counter([1,1,2,3,3,4,5,5,5])
-print(c.most_common(3))
-
-
-# In[17]:
-
-
-list_a = [3, 9, 17, 15, 19]
-list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
-for a, b in zip(list_a, list_b):
-    print(max(a,b), end="  ")
-
-
-# In[27]:
-
-
-import json
-dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
-
-f = open('output.json', 'w')
-json.dump(dic, f)
-f.close()
-
-f = open('output.json', 'r')
-loaded_dic = json.load(f)
-f.close()
-print("loaded dictionary is: ", loaded_dic)
-
-
-# In[5]:
-
-
-item = "content"
-f = open("output.txt", "w")
-f.write(item + "\n")
-f.close()
-
-with open("text.txt", "w") as textfile:
-        textfile.write("Success!")
-
-with open("text.txt","r") as my_file:
-    data =  my_file.read()
-
-with open("test.txt") as f:
-    for line in f:
-        print(line, end="")
-
-
-# In[19]:
-
-
-x=["item1","item2","item3"]
-for index,item in enumerate(x):
-    print(index,":",item)
-
-y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
-for index,key in enumerate(y):
-    print("{0} : {1} : {2}".format(index,key,y[key]))
-
-
-# In[16]:
-
-
-my_list = list(range(1, 11))
-backwards = my_list[::-1]
-print(backwards)
-
-animals = "catdogfrog"
-cat  = animals[:3]                   
-dog  = animals[3:6]                      
-frog = animals[6:]                      
-print(cat,dog,frog)
-
-
-# In[7]:
-
-
-print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
-
-
-# In[3]:
-
-
-import datetime                       
-everything = dir(datetime)         
-print(everything)
-
-
-# In[2]:
-
-
-print(type(50))
-print(type(50.5))
-print(type("50.55"))
-
-
-
-
-#-----------------------------------------------------------------------------
-
-
-# coding: utf-8
-
-# In[18]:
-
-
-# coding: utf-8
-import sys
-X = sys.stdin.read()
-X = X.replace("\n","")
-L = X.split(" ")
-
-
-# In[14]:
-
-
-orig = {"1": 3, "2": 2, "3": 1}
-sortByKey = sorted(orig.items())
-sortByVal = sorted(orig.items(), key=lambda x:x[1])
-
-print(orig)
-print(sortByKey)
-print(sortByVal)
-
-
-# In[15]:
-
-
-set_a = {7,9,2}
-set_b = {9,22,2,25}
-set_c = {9,18,21,5}
-
-set_b.add(12)
-set_b.discard(0)
-
-set_union = set_a.union(set_b)
-set_intersection = set_a.intersection(set_b,set_c)
-set_difference = set_a.difference(set_b)
-set_differences = set_a.difference(set_b,set_c)
-set_difference_1 = set_a.difference(set_b)
-set_difference_2 = set_b.difference(set_a)
-set_symmetric_difference = set_a.symmetric_difference(set_b)
-
-print("set_union {0}".format(set_union))
-print("set_intersection {0}".format(set_intersection))
-print("set_difference {0}".format(set_difference))
-print("set_differences {0}".format(set_differences))
-print("set_difference_1 {0}".format(set_difference_1))
-print("set_difference_2 {0}".format(set_difference_2))
-print("set_symmetric_difference {0}".format(set_symmetric_difference))
-
-
-# In[24]:
-
-
-phrase = "A bird in the hand..."
-
-for char in phrase:
-    if char.lower() == 'a':
-        print('X',end='')
-    else:
-        print(char,end='')
-
-
-# In[3]:
-
-
-my_list = list(filter(lambda x: x % 3 == 0,range(16)))
-squares = list(filter(lambda x:x>=30 and x<= 70,[x**2 for x in range(1,11)]))
-
-print( my_list)
-print(squares)
-
-
-# In[16]:
-
-
-print(0b1001)
-x = 0b1001 + 0b1001
-y = 0b1001 * 0b1001
-print(x, y)
-
-for x in range(0,6):
-    print(bin(x), end="  ")
-
-print(0b101)
-
-print (int("111",2))
-print (int("0b100",2))
-print (int(bin(5),2))
-
-
-# In[37]:
-
-
-from collections import Counter
-c = Counter([1,1,2,3,3,4,5,5,5])
-print(c.most_common(3))
-
-
-# In[17]:
-
-
-list_a = [3, 9, 17, 15, 19]
-list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
-for a, b in zip(list_a, list_b):
-    print(max(a,b), end="  ")
-
-
-# In[27]:
-
-
-import json
-dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
-
-f = open('output.json', 'w')
-json.dump(dic, f)
-f.close()
-
-f = open('output.json', 'r')
-loaded_dic = json.load(f)
-f.close()
-print("loaded dictionary is: ", loaded_dic)
-
-
-# In[5]:
-
-
-item = "content"
-f = open("output.txt", "w")
-f.write(item + "\n")
-f.close()
-
-with open("text.txt", "w") as textfile:
-        textfile.write("Success!")
-
-with open("text.txt","r") as my_file:
-    data =  my_file.read()
-
-with open("test.txt") as f:
-    for line in f:
-        print(line, end="")
-
-
-# In[6]:
-
-
-my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
-print(my_dict.items())
-print(my_dict.keys())
-print(my_dict.values())
-
-candidates = {"a":15, "b":25, "c":35}
-winnerVote = int(max(candidates.values()))
-print(winnerVote)
-
-
-# In[20]:
-
-
-animals = ["aardvark", "badger", "duck", "emu", "fennec fox"]
-duck_index = animals.index("duck")
-print(duck_index)
-animals.insert(duck_index,"cobra")
-print(animals)
-
-
-# In[19]:
-
-
-x=["item1","item2","item3"]
-for index,item in enumerate(x):
-    print(index,":",item)
-
-y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
-for index,key in enumerate(y):
-    print("{0} : {1} : {2}".format(index,key,y[key]))
-
-
-# In[18]:
-
-
-def biggest_number(*args):
-    return max(args)
-X = biggest_number(-10, -5, 5, 10)
-print(X)
-
-
-# In[16]:
-
-
-my_list = list(range(1, 11))
-backwards = my_list[::-1]
-print(backwards)
-
-animals = "catdogfrog"
-cat  = animals[:3]                   
-dog  = animals[3:6]                      
-frog = animals[6:]                      
-print(cat,dog,frog)
-
-
-# In[15]:
-
-
-evens_to_50 = [x for x in range(51) if x % 2 == 0]
-even_squares = [x**2 for x in range(1,11) if x % 2 == 0]
-threes_and_fives = [x for x in range(1,16) if x %3 == 0 or x % 5 == 0]
-print(evens_to_50)
-print(even_squares)
-print(threes_and_fives)
-
-
-# In[10]:
-
-
+#Str関連
 str = "abcde"
 L = list(str)
 str2 = "".join(L)
-print(L)
-print(str2)
 
+phrase = "A bird in the hand..."
+for char in phrase:
+    if char.lower() == 'a':
+        print('X',end='')
+    else:
+        print(char,end='')
 
-# In[5]:
+#Binary関連
+x = 0b1001 + 0b1001
+y = 0b1001 * 0b1001
+print (int("111",2))
+print (int("0b100",2))
+print (bin(5))
+print (int(bin(5),2))
 
+#Counter
+from collections import Counter
+c = Counter([1,1,2,3,3,4,5,5,5])
+print(c.most_common(3))
 
-li = [3, 4, 3, 2, 5, 4]
-li_unique = list(set(li))
-print(li)
-print(li_unique)
-
-
-# In[6]:
-
-
-l = [1,1,2,3,4,4,5,10]
-if all(x < 10 for x in l):
-    print("All numbers are less than 10")
-if any(x >= 10 for x in l):
-    print("There is a number greater than 10")
-
-
-# In[7]:
-
-
-print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
-
-
-# In[3]:
-
-
+#Datetime
 import datetime                       
 everything = dir(datetime)         
 print(everything)
 
+#JSON関連
+import json
+dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
+f = open('output.json', 'w')
+json.dump(dic, f)
+f.close()
+f = open('output.json', 'r')
+loaded_dic = json.load(f)
+f.close()
+print("loaded dictionary is: ", loaded_dic)
 
-# In[2]:
+#ファイル入出力
+item = "content"
+f = open("output.txt", "w")
+f.write(item + "\n")
+f.close()
 
 
-print(type(50))
-print(type(50.5))
-print(type("50.55"))
-
-
-
-
-#-----------------------------------------------------------------------------
-
-# ------------------------------------------------------------------
+#Requests -------------------------------------------------------------------------------------------------------------
 
 import requests
 import pandas as pd
@@ -584,429 +148,7 @@ outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','
 print(outP)
 
 
-
-# In[8]:
-
-
-# ------------------------------------------------------------------
-
-
-# In[18]:
-
-
-# coding: utf-8
-import sys
-X = sys.stdin.read()
-X = X.replace("\n","")
-L = X.split(" ")
-
-
-# In[1]:
-
-
-orig = {"1": 3, "2": 2, "3": 1}
-sortByKey = sorted(orig.items())
-sortByVal = sorted(orig.items(), key=lambda x:x[1])
-
-print(orig)
-print(sortByKey)
-print(sortByVal)
-
-
-# In[15]:
-
-
-set_a = {7,9,2}
-set_b = {9,22,2,25}
-set_c = {9,18,21,5}
-
-set_b.add(12)
-set_b.discard(0)
-
-set_union = set_a.union(set_b)
-set_intersection = set_a.intersection(set_b,set_c)
-set_difference = set_a.difference(set_b)
-set_differences = set_a.difference(set_b,set_c)
-set_difference_1 = set_a.difference(set_b)
-set_difference_2 = set_b.difference(set_a)
-set_symmetric_difference = set_a.symmetric_difference(set_b)
-
-print("set_union {0}".format(set_union))
-print("set_intersection {0}".format(set_intersection))
-print("set_difference {0}".format(set_difference))
-print("set_differences {0}".format(set_differences))
-print("set_difference_1 {0}".format(set_difference_1))
-print("set_difference_2 {0}".format(set_difference_2))
-print("set_symmetric_difference {0}".format(set_symmetric_difference))
-
-
-# In[24]:
-
-
-phrase = "A bird in the hand..."
-
-for char in phrase:
-    if char.lower() == 'a':
-        print('X',end='')
-    else:
-        print(char,end='')
-
-
-# In[3]:
-
-
-my_list = list(filter(lambda x: x % 3 == 0,range(16)))
-squares = list(filter(lambda x:x>=30 and x<= 70,[x**2 for x in range(1,11)]))
-
-print( my_list)
-print(squares)
-
-
-# In[16]:
-
-
-print(0b1001)
-x = 0b1001 + 0b1001
-y = 0b1001 * 0b1001
-print(x, y)
-
-for x in range(0,6):
-    print(bin(x), end="  ")
-
-print(0b101)
-
-print (int("111",2))
-print (int("0b100",2))
-print (int(bin(5),2))
-
-
-# In[2]:
-
-
-from collections import Counter
-c = Counter([1,1,2,3,3,4,5,5,5])
-print(c.most_common(3))
-
-
-# In[17]:
-
-
-list_a = [3, 9, 17, 15, 19]
-list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
-for a, b in zip(list_a, list_b):
-    print(max(a,b), end="  ")
-
-
-# In[4]:
-
-
-import json
-dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
-
-f = open('output.json', 'w')
-json.dump(dic, f)
-f.close()
-
-f = open('output.json', 'r')
-loaded_dic = json.load(f)
-f.close()
-print("loaded dictionary is: ", loaded_dic)
-
-
-# In[5]:
-
-
-item = "content"
-f = open("output.txt", "w")
-f.write(item + "\n")
-f.close()
-
-with open("text.txt", "w") as textfile:
-        textfile.write("Success!")
-
-with open("text.txt","r") as my_file:
-    data =  my_file.read()
-
-with open("test.txt") as f:
-    for line in f:
-        print(line, end="")
-
-
-# In[6]:
-
-
-my_dict = {"food":"apple", "tool":"spoon", "person":"jay"}
-print(my_dict.items())
-print(my_dict.keys())
-print(my_dict.values())
-
-candidates = {"a":15, "b":25, "c":35}
-winnerVote = int(max(candidates.values()))
-print(winnerVote)
-
-
-# In[20]:
-
-
-animals = ["aardvark", "badger", "duck", "emu", "fennec fox"]
-duck_index = animals.index("duck")
-print(duck_index)
-animals.insert(duck_index,"cobra")
-print(animals)
-
-
-# In[19]:
-
-
-x=["item1","item2","item3"]
-for index,item in enumerate(x):
-    print(index,":",item)
-
-y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
-for index,key in enumerate(y):
-    print("{0} : {1} : {2}".format(index,key,y[key]))
-
-
-# In[18]:
-
-
-def biggest_number(*args):
-    return max(args)
-X = biggest_number(-10, -5, 5, 10)
-print(X)
-
-
-# In[16]:
-
-
-my_list = list(range(1, 11))
-backwards = my_list[::-1]
-print(backwards)
-
-animals = "catdogfrog"
-cat  = animals[:3]                   
-dog  = animals[3:6]                      
-frog = animals[6:]                      
-print(cat,dog,frog)
-
-
-# In[15]:
-
-
-evens_to_50 = [x for x in range(51) if x % 2 == 0]
-even_squares = [x**2 for x in range(1,11) if x % 2 == 0]
-threes_and_fives = [x for x in range(1,16) if x %3 == 0 or x % 5 == 0]
-print(evens_to_50)
-print(even_squares)
-print(threes_and_fives)
-
-
-# In[5]:
-
-
-str = "abcde"
-L = list(str)
-str2 = "".join(L)
-print(L)
-print(str2)
-
-
-# In[5]:
-
-
-li = [3, 4, 3, 2, 5, 4]
-li_unique = list(set(li))
-print(li)
-print(li_unique)
-
-
-# In[6]:
-
-
-l = [1,1,2,3,4,4,5,10]
-if all(x < 10 for x in l):
-    print("All numbers are less than 10")
-if any(x >= 10 for x in l):
-    print("There is a number greater than 10")
-
-
-# In[15]:
-
-
-print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
-print("Jane is %s years old and she is " % "35", "kind")
-
-
-# In[3]:
-
-
-import datetime                       
-everything = dir(datetime)         
-print(everything)
-
-
-# In[2]:
-
-
-print(type(50))
-print(type(50.5))
-print(type("50.55"))
-
-#-----------------------------------------------------------------------------
-
-# coding: utf-8
-import sys
-X = sys.stdin.read()
-X = X.replace(""\n"","")
-L = X.split("" "")
-
-文字⇔リスト	"str =”abcde”
-L = list(str)
-str2 = “”.join(L)"
-ユニークセット	"li = [3, 4, 3, 2, 5, 4]
-li_unique = list(set(li))"
-インポートとファンクション一覧	"import datetime                            
-everything = dir(datetime)         
-print(everything)"
-データタイプ	"print(type(50))
-print(type(50.5))
-print(type(""50.55""))"
-All, Any	"l = [1,1,2,3,4,4,5,10]
-if all(x < 10 for x in l):
-    print(""All numbers are less than 10"")
-if any(x >= 10 for x in l):
-    print(""There is a number greater than 10"")"
-整列 print	print("{0} is {1} years old and he is {2}".format("Mike",35,"scary"))
-複雑リスト作成	"evens_to_50 = [x for x in range(51) if x % 2 == 0]
-print(evens_to_50)
-even_squares = [x**2 for x in range(1,11) if x % 2 == 0]
-print(evens_squares)
-threes_and_fives = [x for x in range(1,16) if x %3 == 0 or x % 5 == 0]
-print threes_and_fives"
-リスト操作	"my_list = list(range(1, 11))
-backwards = my_list[::-1]
-print(backwards)
-animals = ""catdogfrog""
-cat  = animals[:3]                   
-dog  = animals[3:6]                      
-frog = animals[6:]                      
-print(cat,dog,frog)"
-個数未定の引数	"def biggest_number(*args):
-    print(max(args))
-    return max(args)
-biggest_number(-10, -5, 5, 10)"
-"リスト、ディクショナリーの
-iteration"	"x=[""item1"",""item2"",""item3""]
-for index,item in enumerate(x):
-    print(index,"":"",item)
-
-y={'key1':'val1', 'key2':'val2', 'key3':'val3'}
-for index,key in enumerate(y):
-    print(""{0} : {1} : {2}"".format(index,key,y[key]))"
-"リスト
-インデックス探し
-挿入"	"animals = [""aardvark"", ""badger"", ""duck"", ""emu"", ""fennec fox""]
-duck_index = animals.index(""duck"")
-print(duck_index)
-animals.insert(duck_index,""cobra"")
-print(animals)"
-ディクショナリー操作	"my_dict = {""food"":""apple"", ""tool"":""spoon"", ""person"":""jay""}
-print(my_dict.items())
-print(my_dict.keys())
-print(my_dict.values())
-
-candidates = {""a"":15, ""b"":25, ""c"":35}
-winnerVote = int(max(candidates.values()))"
-改行なしPrint	"phrase = ""A bird in the hand...""
-
-for char in phrase:
-    if char.lower() == 'a':
-        print('X',end='')
-    else:
-        print(char,end='')"
-配列二つ同時iteration	"list_a = [3, 9, 17, 15, 19]
-list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
-for a, b in zip(list_a, list_b):
-    print max(a,b)"
-ファイル I/O	"item = ""content""
-f = open(""output.txt"", ""w"")
-f.write(item + ""\n"")
-f.close()
-
-with open(""text.txt"", ""w"") as textfile:
-        textfile.write(""Success!"")
-
-with open(""text.txt"",""r"") as my_file:
-    data =  my_file.read()
-
-with open(""test.txt"") as f:
-    for line in f:
-        print(line)"
-JSON操作	"import json
-dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
-
-f = open('output.json', 'w')
-json.dump(dic, f)
-f.close()
-
-f = open('output.json', 'r')
-loaded_dic = json.load(f)
-f.close()
-print(""loaded dictionary is: "", loaded_dic)"
-ラムダ式(フィルター)	"my_list = range(16)
-print filter(lambda x: x % 3 == 0, my_list)
-
-squares =[x**2 for x in range(1,11)]
-print filter(lambda x:x>=30 and x<= 70,squares)"
-2進数操作	"print(0b1001)
-x = 0b1001 + 0b1001
-y = 0b1001 * 0b1001
-print(x, y)
-
-for x in range(0,6):
-    print(bin(x))
-
-print(0b101)
-
-print int(""111"",2)
-print int(""0b100"",2)
-print int(bin(5),2)"
-Counterライブラリ	"from collections import Counter
-c = Counter([1,1,2,3,3,4])
-print(c.most_common(2))"
-シンプル　ソート	"orig = {""b"": 3, ""a"": 2, ""c"": 1}
-sortByKey = sorted(orig.items())
-sortByVal = sorted(orig.items(), key=lambda x:x[1])
-
-print(orig)
-print(sortByKey)
-print(sortByVal)"
-セット　各種処理	"set_a = {7,9,2}
-set_b = {9,22,2,25}
-
-set_b.add(12)
-set_b.discard(0)
-
-set_union = set_a.union(set_b)
-print(""set_union {0}"".format(set_union))
-
-set_intersection = set_a.intersection(set_b,set_c)
-print(""set_intersection {0}"".format(set_intersection))
-
-set_difference = set_a.difference(set_b)
-print(""set_difference {0}"".format(set_difference))
-
-set_differences = set_a.difference(set_b,set_c)
-print(""set_differences {0}"".format(set_differences))
-
-set_difference_1 = set_a.difference(set_b)
-set_difference_2 = set_b.difference(set_a)
-print(""set_difference_1 {0}"".format(set_difference_1))
-print(""set_difference_2 {0}"".format(set_difference_2))
-
-set_symmetric_difference = set_a.symmetric_difference(set_b)
-print(""set_symmetric_difference {0}"".format(set_symmetric_difference))"
-複雑　ソート	"from operator import itemgetter, attrgetter
+# Class 使用例------------------------------------------------------------------------------------------------------------
 
 class Student:
     def __init__(self, name, grade, age):
@@ -1028,8 +170,9 @@ print(sorted(student_objects, key=attrgetter('age')))
 # gradeでsort さらにageでsort
 print(sorted(student_objects, key=attrgetter('grade', 'age')))
 
-"
-クラス　サンプル	"class Animal(object):
+
+# Class 使用例 2 ------------------------------------------------------------------------------------------------------------
+class Animal(object):
     is_alive = True
     num_Animals = 0
     AnimalDict={}
@@ -1039,18 +182,20 @@ print(sorted(student_objects, key=attrgetter('grade', 'age')))
         Animal.num_Animals += 1
         Animal.AnimalDict[name] = self
         
-zebra = Animal(""Jeffrey"", 2)
-giraffe = Animal(""Bruce"", 1)
-panda = Animal(""Chad"", 7)
+zebra = Animal("Jeffrey", 2)
+giraffe = Animal("Bruce", 1)
+panda = Animal("Chad", 7)
 
 print(zebra.name, zebra.age, zebra.is_alive)
 print(giraffe.name, giraffe.age, giraffe.is_alive)
 print(panda.name, panda.age, panda.is_alive)
-
 print(Animal.num_Animals)
 print(Animal.AnimalDict)
 print(Animal.AnimalDict[""Bruce""].age)"
-クラス　サンプル2	"class Shape(object):
+
+# Class 使用例 3 承継 -------------------------------------------------------------------------------------------
+
+class Shape(object):
     def __init__(self, number_of_sides):
         self.number_of_sides = number_of_sides
     def __repr__(self):
@@ -1072,10 +217,6 @@ print(myShape)
 
 yourShape = Shape(4)
 print(yourShape)"
-
-
-
-
 
 #-------------------Pandas memo---------------------------------------------
 
