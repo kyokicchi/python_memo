@@ -52,6 +52,15 @@ git_res = requests.get('https://api.github.com/search/repositories?q=language:py
 outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','git_url','updated_at','created_at']]
 #print(git_res.text)
 print(outP)
+#Crawling リンク収集 ------------------------------------------------------------------------------------------------
+import requests
+import lxml.html
+url = 'https://www.target.com/'
+s_domain = 'www.target.com/'
+response = requests.get(url)
+html = lxml.html.fromstring(response.content)
+l_links = html.xpath('//a[(starts-with(@href, "http://") or starts-with(@href, "https://")) and contains(@href, s_domain) and not(contains(@href, ".jpg") or contains(@href, ".png") or contains(@href, ".gif"))]/@href')
+print(l_links)
 
 #●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● General ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #PrintのFormating
