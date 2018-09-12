@@ -6,12 +6,14 @@ import sys
 DATA = sys.stdin.read()
 DATA = DATA.replace("\n","")
 DATA = DATA.split()
+
 #-------------------ファイル入出力---------------------------------------------
 #ファイル入出力
 item = "content"
 f = open("output.txt", "w")
 f.write(item + "\n")
 f.close()
+
 #-------------------JSON入出力---------------------------------------------
 import json
 dic = {'key1':'val1', 'key2':'val2', 'key3':'val3', 'key4':'val4'}
@@ -23,12 +25,14 @@ f.close()
 f = open('output.json', 'r')
 dic = json.load(f)
 f.close()
+
 #-------------------Pandas 入出力---------------------------------------------
 import pandas as pd
 #Read
 df = pd.read_csv('train.csv')
 #Save
 df.to_csv('modified.csv')
+
 #機械学習 modelオブジェクト入出力--------------------------------------------------------------------------------
 #モデル保存
 import pickle
@@ -38,6 +42,7 @@ pickle.dump(model, open(filename, 'wb'))
 import pickle
 filename = 'xgb_model.sav'
 model = pickle.load(open(filename, 'rb'))
+
 #Tensorflow モデル保存 & 読み込み--------------------------------------------------------------------------
 #Save
 saver = tf.train.Saver()
@@ -45,13 +50,14 @@ saver.save(sess, '../model/test_model')
 #Read
 saver = tf.train.Saver()
 saver.restore(sess, '../model/test_model')
+
+#●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Crawling 関連 ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #Requests ------------------------------------------------------------------------------------------------
 import requests
 import pandas as pd
 git_res = requests.get('https://api.github.com/search/repositories?q=language:python+created:2017-07-28&per_page=3')
 outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','git_url','updated_at','created_at']]
-#print(git_res.text)
-print(outP)
+
 #Crawling リンク収集 ------------------------------------------------------------------------------------------------
 import requests
 import lxml.html
@@ -59,8 +65,9 @@ url = 'https://www.target.com/'
 s_domain = 'www.target.com/'
 response = requests.get(url)
 html = lxml.html.fromstring(response.content)
-l_links = html.xpath('//a[(starts-with(@href, "http://") or starts-with(@href, "https://")) and contains(@href, s_domain) and not(contains(@href, ".jpg") or contains(@href, ".png") or contains(@href, ".gif"))]/@href')
-print(l_links)
+s_xpathcode = '//a[(starts-with(@href, "http://") or starts-with(@href, "https://"))' + \
+'and contains(@href, ' + s_domain + ') and not(contains(@href, ".jpg"))]/@href'
+l_links = html.xpath(s_xpathcode)
 
 #●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● General ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #PrintのFormating
