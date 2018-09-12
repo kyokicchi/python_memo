@@ -262,6 +262,7 @@ df.corr()
 df = df.fillna(0)
 df = pd.concat((df, df_x), axis = 1)
 df = df.dropna()
+df = df.drop_duplicated()
 df = df.drop('ColumnName',axis = 1)
 
 df_x = pd.Series(l_x, name = "ColumnName")
