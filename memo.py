@@ -29,9 +29,11 @@ f.close()
 #-------------------Pandas 入出力---------------------------------------------
 import pandas as pd
 #Read
-df = pd.read_csv('train.csv')
+df = pd.read_csv('raw.csv')
+df = pd.read_csv('raw.csv', header=None)
 #Save
 df.to_csv('modified.csv')
+df.to_csv('modified.csv', header=False, index=False)
 
 #機械学習 modelオブジェクト入出力--------------------------------------------------------------------------------
 #モデル保存
@@ -61,6 +63,7 @@ outP = pd.DataFrame(git_res.json()['items'])[:][['language','stargazers_count','
 #Crawling リンク収集 ------------------------------------------------------------------------------------------------
 import requests
 import lxml.html
+
 url = 'https://www.target.com/'
 s_domain = 'www.target.com/'
 response = requests.get(url)
@@ -68,6 +71,8 @@ html = lxml.html.fromstring(response.content)
 s_xpathcode = '//a[(starts-with(@href, "http://") or starts-with(@href, "https://"))' + \
 'and contains(@href, ' + s_domain + ') and not(contains(@href, ".jpg"))]/@href'
 l_links = html.xpath(s_xpathcode)
+
+s_xpathcode = '//*[@class ="entry-content"]/p/descendant::text()'
 
 #●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● General ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #PrintのFormating
@@ -272,6 +277,8 @@ n_oldest = df.Age.max()
 df_x = df[df.Age==n_oldest]
 df_x = df[df.Age>=40]
 n_family = df.Family.apply(lambda x: (df.Family == x).sum())
+
+df = df[df[0].str.contains('//www.target.com')]
 
 a = df.Sex == 'male'
 a.sum()
