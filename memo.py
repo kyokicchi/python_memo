@@ -269,6 +269,7 @@ df = pd.concat((df, df_x), axis = 1)
 df = df.dropna()
 df = df.drop_duplicated()
 df = df.drop('ColumnName',axis = 1)
+df = df['ColumnName'].str.split('@', expand=True)
 
 df_x = pd.Series(l_x, name = "ColumnName")
 l_names = df.Name.values.tolist()
