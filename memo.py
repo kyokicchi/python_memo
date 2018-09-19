@@ -26,14 +26,20 @@ f = open('output.json', 'r')
 dic = json.load(f)
 f.close()
 
+s = f.read()
+dic = json.loads(s)
+
 #-------------------Pandas 入出力---------------------------------------------
 import pandas as pd
 #Read
 df = pd.read_csv('raw.csv')
-df = pd.read_csv('raw.csv', header=None)
+df = pd.read_csv('raw.csv', dtype='object', nrows=30, header=None)
 #Save
 df.to_csv('modified.csv')
 df.to_csv('modified.csv', header=False, index=False)
+
+from pandas.io.json import json_normalize
+pd.io.json.loads(str_jsondata)
 
 #機械学習 modelオブジェクト入出力--------------------------------------------------------------------------------
 #モデル保存
@@ -52,6 +58,13 @@ saver.save(sess, '../model/test_model')
 #Read
 saver = tf.train.Saver()
 saver.restore(sess, '../model/test_model')
+
+
+#Google Colab  Google Drive マウント--------------------------------------------------------------------------
+from google.colab import drive
+drive.mount('/content/gdrive')
+%cd ../content/gdrive/My Drive/projects/
+
 
 #●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●● Crawling 関連 ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
 #Requests ------------------------------------------------------------------------------------------------
