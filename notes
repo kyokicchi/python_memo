@@ -8,6 +8,9 @@ df['sess_date_week'] = df['date'].dt.weekofyear
 
 
 
-
+df['user_cumcnt_per_day'] = (df[['fullVisitorId','date', 'dummy']].groupby(['fullVisitorId','date'])['dummy'].cumcount()+1)
+df['user_sum_per_day'] = df[['fullVisitorId','date', 'dummy']].groupby(['fullVisitorId','date'])['dummy'].transform(sum)
+df['user_cumcnt_sum_ratio_per_day'] = df['user_cumcnt_per_day'] / df['user_sum_per_day'] 
+df.drop('dummy', axis=1, inplace=True)
 
 
