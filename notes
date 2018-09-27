@@ -1,0 +1,13 @@
+
+
+df['date'] = pd.to_datetime(df['date'])
+df['sess_date_dow'] = df['date'].dt.dayofweek
+df['sess_date_doy'] = df['date'].dt.dayofyear
+df['sess_date_mon'] = df['date'].dt.month
+df['sess_date_week'] = df['date'].dt.weekofyear
+
+
+
+
+
+
