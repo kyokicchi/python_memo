@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>kaggle_0930</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>kaggle_1001</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11781,7 +11781,7 @@ div#notebook {
 <script>
 $( document ).ready(function(){
 
-            var cfg = {};
+            var cfg = {"base_numbering": 1, "nav_menu": {}, "number_sections": true, "sideBar": true, "skip_h1_title": false, "title_cell": "Table of Contents", "title_sidebar": "Contents", "toc_cell": false, "toc_position": {}, "toc_section_display": true, "toc_window_display": false};
 
             // fire the main function with these parameters
             require(['nbextensions/toc2/toc2'], function (toc2) {
@@ -12167,7 +12167,7 @@ for col in cat_cols:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
@@ -12184,29 +12184,10 @@ df_test = boolToNum(df_test)
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 20 ms, sys: 0 ns, total: 20 ms
-Wall time: 82.4 ms
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;trafficSource.referralPath&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -12228,7 +12209,7 @@ Wall time: 82.4 ms
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
@@ -12249,29 +12230,10 @@ df_test.to_csv(&#39;test_wip.csv&#39;)
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 1min 11s, sys: 708 ms, total: 1min 11s
-Wall time: 1min 11s
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">aggregate_by_users</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cat_cols</span><span class="p">):</span>
@@ -12306,7 +12268,7 @@ Wall time: 1min 11s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
@@ -12317,25 +12279,6 @@ df_user_test = aggregate_by_users(df_test, cat_cols)
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 16 s, sys: 1.98 s, total: 17.9 s
-Wall time: 18.2 s
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -12350,7 +12293,7 @@ Wall time: 18.2 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
@@ -12363,22 +12306,52 @@ df_user_test.to_csv(&#39;user_test_wip.csv&#39;)
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 3min, sys: 1.3 s, total: 3min 1s
-Wall time: 3min 1s
-</pre>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Load-saved-CSV">Load saved CSV<a class="anchor-link" href="#Load-saved-CSV">&#182;</a></h2>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
 
+df_user_train = pd.read_csv(&#39;../input/trying-google-analytics-competition/user_train_wip.csv&#39;)
+df_user_test = pd.read_csv(&#39;../input/trying-google-analytics-competition/user_test_wip.csv&#39;)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="model">model<a class="anchor-link" href="#model">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+
+df_y = df_user_train[&#39;totals.transactionRevenue_sum&#39;]
+df_x = df_user_train.drop([&#39;date_min&#39;, &#39;date_max&#39;, &#39;totals.transactionRevenue_sum&#39;], axis=1)
+df_tgt = df_user_test.drop([&#39;date_min&#39;, &#39;date_max&#39;, &#39;totals.transactionRevenue_sum&#39;], axis=1)
+</pre></div>
+
+</div>
 </div>
 </div>
 
@@ -12391,52 +12364,60 @@ Wall time: 3min 1s
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="model">model<a class="anchor-link" href="#model">&#182;</a></h2>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+import lightgbm as lgb
+from sklearn.model_selection import KFold
 
-from sklearn.model_selection import train_test_split
+folds = KFold(n_splits=5, shuffle=True, random_state=1)
 
-df_y = df_user_train[&#39;totals.transactionRevenue_sum&#39;]
-df_x = df_user_train.drop([&#39;date_min&#39;, &#39;date_max&#39;, &#39;totals.transactionRevenue_sum&#39;], axis=1)
+pred_tgt = np.zeros(df_tgt.shape[0])
+pred_train = np.zeros(df_x.shape[0])
+l_scores = []
 
-x_train, x_test, y_train, y_test = train_test_split(df_x, df_y, test_size=0.25)
+lgb_params = {
+    &#39;learning_rate&#39;: 0.03,
+    &#39;n_estimators&#39;: 2000,
+    &#39;num_leaves&#39;: 128,
+    &#39;subsample&#39;: 0.2217,
+    &#39;colsample_bytree&#39;: 0.6810,
+    &#39;min_split_gain&#39;: np.power(10.0, -4.9380),
+    &#39;reg_alpha&#39;: np.power(10.0, -3.2454),
+    &#39;reg_lambda&#39;: np.power(10.0, -4.8571),
+    &#39;min_child_weight&#39;: np.power(10.0, 2),
+    &#39;silent&#39;: True
+}
+
+for i_fold, (i_trainset, i_testset) in enumerate(folds.split(df_x)):
+    model = lgb.LGBMRegressor(**lgb_params)
+
+    model.fit(
+        df_x.iloc[i_trainset], df_y.iloc[i_trainset],
+        evalset=[(df_x.iloc[i_trainset], df_y.iloc[i_trainset]), (df_x.iloc[i_testset], df_y.iloc[i_testset])],
+        evalmetric=&#39;rmse&#39;,
+        early_stopping_rounds=100,
+        verbose=0
+    )
+    
+    oof_preds[i_testset] = model.predict(df_x.iloc[i_testset])
+
+    print(&#39;Fold %d RMSE (raw output) : %.5f&#39; % (i_fold + 1, rmse(df_y.iloc[i_testset], oof_preds[i_testset])))
+    pred_train[pred_train &lt; 0] = 0
+    c_scores.append(rmse(df_y.iloc[i_testset], pred_train[i_testset]))
+    print(&#39;Fold %d RMSE : %.5f&#39; % (i_fold + 1, l_scores[-1]))
+
+    pred_target_tmp = model.predict(df_tgt)
+    pred_target_tmp[pred_target_tmp &lt; 0] = 0
+    pred_tgt += pred_target_tmp / folds.n_splits
+
+print(&#39;Full OOF RMSE (zero clipped): %.5f +/- %.5f&#39; % (rmse(df_y, pred_train), float(np.std(l_scores))))
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;timed exec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-
-<span class="ansi-red-fg">NameError</span>: name &#39;df_user_train&#39; is not defined</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -12446,55 +12427,28 @@ x_train, x_test, y_train, y_test = train_test_split(df_x, df_y, test_size=0.25)
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lgb_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.03</span><span class="p">,</span>
-    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
-    <span class="s1">&#39;num_leaves&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-    <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.2217</span><span class="p">,</span>
-    <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.6810</span><span class="p">,</span>
-    <span class="s1">&#39;min_split_gain&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.9380</span><span class="p">),</span>
-    <span class="s1">&#39;reg_alpha&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.2454</span><span class="p">),</span>
-    <span class="s1">&#39;reg_lambda&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.8571</span><span class="p">),</span>
-    <span class="s1">&#39;min_child_weight&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-    <span class="s1">&#39;silent&#39;</span><span class="p">:</span> <span class="kc">True</span>
-<span class="p">}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+df_tgt[&#39;PredictedLogRevenue&#39;] = pred_tgt
+df_tgt[[&#39;PredictedLogRevenue&#39;]].to_csv(&quot;output.csv&quot;, index=True)
 
-<span class="k">for</span> <span class="n">fold_</span><span class="p">,</span> <span class="p">(</span><span class="n">trn_</span><span class="p">,</span> <span class="n">val_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">trn_users</span><span class="p">)):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">LGBMRegressor</span><span class="p">(</span><span class="o">**</span><span class="n">lgb_params</span><span class="p">)</span>
+print(&#39;Submission data shape : {}&#39;.format(sub_users[[&#39;PredictedLogRevenue&#39;]].shape))
+</pre></div>
 
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-        <span class="n">trn_users</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">trn_</span><span class="p">],</span> <span class="n">trn_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">trn_</span><span class="p">],</span>
-        <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">trn_users</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">trn_</span><span class="p">],</span> <span class="n">trn_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">trn_</span><span class="p">]),</span>
-                  <span class="p">(</span><span class="n">trn_users</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">val_</span><span class="p">],</span> <span class="n">trn_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">val_</span><span class="p">])],</span>
-        <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;rmse&#39;</span><span class="p">,</span>
-        <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span>
-    <span class="p">)</span>
+</div>
+</div>
+</div>
 
-    <span class="n">oof_preds</span><span class="p">[</span><span class="n">val_</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">trn_users</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">val_</span><span class="p">])</span>
-    <span class="n">curr_sub_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sub_users</span><span class="p">)</span>
-    <span class="n">curr_sub_preds</span><span class="p">[</span><span class="n">curr_sub_preds</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">sub_preds</span> <span class="o">+=</span> <span class="n">curr_sub_preds</span> <span class="o">/</span> <span class="n">folds</span><span class="o">.</span><span class="n">n_splits</span>
-    <span class="c1">#     preds[preds &lt;0] = 0</span>
-
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Fold </span><span class="si">%d</span><span class="s1"> RMSE (raw output) : </span><span class="si">%.5f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fold_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rmse</span><span class="p">(</span><span class="n">trn_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">val_</span><span class="p">],</span> <span class="n">oof_preds</span><span class="p">[</span><span class="n">val_</span><span class="p">])))</span>
-    <span class="n">oof_preds</span><span class="p">[</span><span class="n">oof_preds</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">oof_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">trn_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">val_</span><span class="p">],</span> <span class="n">oof_preds</span><span class="p">[</span><span class="n">val_</span><span class="p">]))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Fold </span><span class="si">%d</span><span class="s1"> RMSE : </span><span class="si">%.5f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fold_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">oof_scores</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Full OOF RMSE (zero clipped): </span><span class="si">%.5f</span><span class="s1"> +/- </span><span class="si">%.5f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">trn_y</span><span class="p">,</span> <span class="n">oof_preds</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">oof_scores</span><span class="p">))))</span>
-
-<span class="c1"># Stay in logs for submission</span>
-<span class="n">sub_users</span><span class="p">[</span><span class="s1">&#39;PredictedLogRevenue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_preds</span>
-<span class="n">sub_users</span><span class="p">[[</span><span class="s1">&#39;PredictedLogRevenue&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;simple_lgb.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Submission data shape : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_users</span><span class="p">[[</span><span class="s1">&#39;PredictedLogRevenue&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-
-<span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">oof_preds</span><span class="p">,</span> <span class="n">sub_preds</span><span class="p">)),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">pred_train</span><span class="p">,</span> <span class="n">pred_tgt</span><span class="p">)),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distributions of OOF and TEST predictions&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">oof_preds</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OOF predictions&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sub_preds</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TEST predictions&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pred_train</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OOF predictions&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pred_tgt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TEST predictions&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;distributions.png&#39;</span><span class="p">)</span>
 </pre></div>
